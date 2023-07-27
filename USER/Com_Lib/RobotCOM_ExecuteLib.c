@@ -35,6 +35,10 @@ void Usart_Test(COMFrame *Frame)//test
 	UART_SendString(USART6,"GREAT");
 }
 
+void BlueTooth_Get_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换为控制命令 
+{
+}
+
 /*
 
 extern int launch_flag;

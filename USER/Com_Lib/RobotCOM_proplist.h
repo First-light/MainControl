@@ -53,8 +53,9 @@ extern const uint8_t g_My_USART2_Prop_Count;
 
 extern const uint8_t g_My_USART4_Prop_Count;
 
-/* ************************************ 处理函数 **************************************** */
+/* ************************************ 属性值 **************************************** */
 #define USART_TEST 0x99
+#define BLUETOOTH_GET_4CLAW 0x41
 /*
 #define GUN_FOR_SHOOT_8CLAW  0x21
 #define GUN_SHOOT_8CLAW  0x22
@@ -74,6 +75,7 @@ extern const uint8_t g_My_USART4_Prop_Count;
 */
 /* ************************************ 处理函数 **************************************** */
 void Usart_Test(COMFrame *Frame);//test
+void BlueTooth_Get_4Claw(COMFrame *Frame);//蓝牙接受信号，并转换为控制命令
 /*
 void Gun_For_Shoot_8Claw(COMFrame *Frame);
 void Gun_Shoot_8Claw(COMFrame *Frame);

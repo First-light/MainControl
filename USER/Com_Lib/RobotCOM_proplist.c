@@ -29,6 +29,7 @@
 	};  */
 	COMFunDict g_My_USART4_Prop_Array[] = {
 		{USART_TEST,Usart_Test},
+		{BLUETOOTH_GET_4CLAW,BlueTooth_Get_4Claw},
 	/*	{GUN_FOR_SHOOT_8CLAW,Gun_For_Shoot_8Claw},
 		{GUN_SHOOT_8CLAW,Gun_Shoot_8Claw},
 		{GUN_FOR_CIRCLE_8CLAW,Gun_For_Circle_8Claw},

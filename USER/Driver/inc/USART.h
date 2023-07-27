@@ -19,7 +19,7 @@
 #define MY_USART4_BAUDRATE          115200
 
 /* Definition for USARTx resources */
-#define MY_USART1                   USART1                            
+#define MY_USART1                   USART1  //А¶СА                          
 #define MY_USART1_CLK               RCC_APB2Periph_USART1
 #define MY_USART1_CLK_INIT          RCC_APB2PeriphClockCmd
 #define MY_USART1_IRQn              USART1_IRQn
