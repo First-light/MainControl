@@ -37,7 +37,37 @@ void Usart_Test(COMFrame *Frame)//test
 
 void BlueTooth_Get_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换为控制命令 
 {
+	
 }
+
+
+
+uint32_t Echo_MM = 0;//超声波检测的距离（mm）
+
+void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号
+{
+	Echo_MM =Frame->Data.uint32_ts[0];
+}
+
+int32_t FrontLine = 0;//前轮偏移 0为无偏移
+int32_t BehindLine = 0;//后轮偏移
+	
+void Usart_SubMainLine_8Claw(COMFrame *Frame)//串口接收循迹红外偏移量信号
+{
+	FrontLine = Frame->Data.int32_ts[0];
+	BehindLine = Frame->Data.int32_ts[1];
+}
+ 
+uint8_t PointList[POINT_TYPE] ={0};
+
+void Usart_SubMainPoint_8Claw(COMFrame *Frame)//串口接收负责点检测的传感器的信号
+{
+	PointList[LeftPoint] = Frame->Data.uint8_ts[0];
+	PointList[RightPoint] = Frame->Data.uint8_ts[1];
+	PointList[CenterPoint] = Frame->Data.uint8_ts[2];
+	PointList[FrontPoint] = Frame->Data.uint8_ts[3];	
+}
+ 
 
 /*
 

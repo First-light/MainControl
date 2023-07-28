@@ -18,8 +18,10 @@
 #include "hust_math_lib.h"
 /*******************************属性和方法字典***********************************/
 
-	COMFunDict g_My_USART1_Prop_Array[] = {
-		{NULL,NULL},
+	COMFunDict g_My_USART1_Prop_Array[] = { //传感器
+		{USART_SUBMAINECHO_4CLAW,Usart_SubMainEcho_4Claw},
+		{USART_SUBMAINLINE_8CLAW,Usart_SubMainLine_8Claw},
+		{USART_SUBMAINPOINT_8CLAW,Usart_SubMainPoint_8Claw},
 	};
 	COMFunDict g_My_USART2_Prop_Array[] = {
 		{NULL,NULL},
@@ -27,23 +29,9 @@
 /*	COMFunDict g_My_USART3_Prop_Array[] = {
 		{NULL,NULL},
 	};  */
-	COMFunDict g_My_USART4_Prop_Array[] = {
+	COMFunDict g_My_USART4_Prop_Array[] = {	//蓝牙
 		{USART_TEST,Usart_Test},
 		{BLUETOOTH_GET_4CLAW,BlueTooth_Get_4Claw},
-	/*	{GUN_FOR_SHOOT_8CLAW,Gun_For_Shoot_8Claw},
-		{GUN_SHOOT_8CLAW,Gun_Shoot_8Claw},
-		{GUN_FOR_CIRCLE_8CLAW,Gun_For_Circle_8Claw},
-		{GUN_RESET_8CLAW,Gun_Reset_8Claw},
-		{GUN_ANGLE_GET_8CLAW,Gun_Angle_Get_8Claw},
-		{GUN_STOP_8CLAW,Gun_Stop_8Claw},
-		{GUN_ON_PLACE_8CLAW,Gun_On_Place_8Claw},
-		{GUN_SINGLE_SHOOT_8CLAW,Gun_Single_Shoot_8Claw},
-		
-		{GUN_IN_ADVANCE_8CLAW,Gun_In_Advance_8Claw},
-		
-		{SITE_CHOOESE_8CLAW,Site_Chooese_8Claw},
-		{RENEW_SITE_8CLAW,Renew_Site_8Claw},
-	*/
 	};
 
 
