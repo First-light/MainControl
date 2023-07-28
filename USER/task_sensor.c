@@ -5,9 +5,9 @@
 
 
 //master
-RunningStruct MainControlRun = {AT_BRAKE,0};//��¼���ܳ�״̬��
+RunningStruct MainControlRun = {AT_BRAKE,0};//
 
-void TaskSensor (void *p_arg)//���ո�������������������ָ��ȷ����״̬ʶ��
+void TaskSensor (void *p_arg)//
 {
   	OS_ERR err;
 	if(FrontLine > 0)
