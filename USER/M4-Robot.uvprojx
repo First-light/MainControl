@@ -448,6 +448,11 @@
               <FileType>1</FileType>
               <FilePath>..\TASK\task_handle.c</FilePath>
             </File>
+            <File>
+              <FileName>task_sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task_sensor.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
