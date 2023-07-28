@@ -7,7 +7,7 @@
 "..\obj\globaltime.o"
 "..\obj\task_init.o"
 "..\obj\task_handle.o"
-"..\obj\task_followline.o"
+"..\obj\task_sensor.o"
 "..\obj\myglobe.o"
 "..\obj\robotcan_basic.o"
 "..\obj\robotcan_commandlib.o"

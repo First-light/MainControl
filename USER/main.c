@@ -3,7 +3,7 @@
 #include "task_init.h"
 #include "elmo.h"
 
-/*  2023/7/26
+/*  2023/7/28
 创建新任务：
 task_init.h 添加task的 任务函数声明，任务开辟的空间，任务优先级
 main.c 声明添加task设置量的结构体， 声明CPU_STK数组
@@ -26,6 +26,12 @@ RobotCOMCommandlib里写发送函数的定义，（可以）写函数里全局变量的定义，
 在system config c里添加串口的初始化
 在stm32f4xx it c里添加中断服务函数
 
+创建任务：
+main.c在TaskStart（）函数按格式创建任务，
+main.c定义任务OS_TCB（信息结构体）CPU_STK开辟任务空间
+task_init.h宏定义任务优先级，任务开辟空间，声明任务函数 （可以声明全局变量）
+task_init.c编写任务函数，定义全局变量
+（建议）task_xxx.c编写较大任务函数，然后在init.h里声明函数
 */
 
 static  OS_TCB   TaskStartTCB;
@@ -47,6 +53,10 @@ static  CPU_STK  TaskUSARTStk[TASK_USART_STK_SIZE];
 
 static  OS_TCB   TaskHandleTCB;
 static  CPU_STK  TaskHandleStk[TASK_HANDLE_STK_SIZE];
+
+static  OS_TCB   TaskSensorTCB;
+static  CPU_STK  TaskSensorStk[TASK_MONITOR_STK_SIZE];
+
 
 int main(void)
 {

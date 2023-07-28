@@ -16,6 +16,7 @@
 
 #include "RobotCOM_Basic.h"
 
+
 /* ************************************ 类型 **************************************** */
 #define POINT_TYPE 4//点检测器的个数
 
@@ -29,8 +30,11 @@ typedef enum {
 /* ************************************ 全局声明 **************************************** */
 
 extern uint32_t Echo_MM;//超声波检测的距离（mm）
-extern int32_t FrontLine;//前轮偏移 0为无偏移
+extern int32_t FrontLine;//前轮偏移 0为无偏移//向右为正
 extern int32_t BehindLine;//后轮偏移
+extern uint8_t	FrontCount;
+extern uint8_t BehindCount;
+
 extern uint8_t PointList[POINT_TYPE];//点检测
 
 /* ************************************ 字典声明 **************************************** */

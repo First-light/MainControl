@@ -13,7 +13,7 @@
 
 
 
-extern float Yaw_PC_Angle;
+//extern float Yaw_PC_Angle;
 //extern float Distance,Pitch_Position_Motor;
 //extern volatile MotorTypeDef Motorleft, Motorright, Motorpitch;
 
@@ -41,6 +41,7 @@ void TaskMonitor(void *p_arg)
         OSTimeDlyHMSM(0, 0, 0, 900, OS_OPT_TIME_HMSM_STRICT, &err);
     }
 }
+
 
 /***********USART**********/
 void TaskUSART(void *p_arg)
