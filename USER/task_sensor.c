@@ -4,10 +4,10 @@
 #include "task_init.h"
 
 
+//master
+RunningStruct MainControlRun = {AT_BRAKE,0};//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ü³ï¿½×´Ì¬ï¿½ï¿½
 
-RunningStruct MainControlRun = {AT_BRAKE,0};//¼ÇÂ¼ÖÇÄÜ³µ×´Ì¬Á¿
-
-void TaskSensor (void *p_arg)//½ÓÊÕ¸÷¸ö´«¸ÐÆ÷µÄÁ¿£¬½øÐÐÖ¸±êÈ·¶¨ºÍ×´Ì¬Ê¶±ð
+void TaskSensor (void *p_arg)//ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½×´Ì¬Ê¶ï¿½ï¿½
 {
   	OS_ERR err;
 	if(FrontLine > 0)
