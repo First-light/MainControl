@@ -31,6 +31,12 @@ AttitudeTypedef AutoTaskList[] ={
 	AT_BRAKE,
 };
 
+void TaskTodoList (void *p_arg)
+{
+  	OS_ERR err;
 
+
+	OSTimeDlyHMSM(0, 0, 0, 10, OS_OPT_TIME_HMSM_STRICT, &err);
+}
 
 	

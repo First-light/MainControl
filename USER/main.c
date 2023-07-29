@@ -57,6 +57,8 @@ static  CPU_STK  TaskHandleStk[TASK_HANDLE_STK_SIZE];
 static  OS_TCB   TaskSensorTCB;
 static  CPU_STK  TaskSensorStk[TASK_MONITOR_STK_SIZE];
 
+static  OS_TCB   TaskTodoListTCB;
+static  CPU_STK  TaskTodoListStk[TASK_TODOLIST_STK_SIZE];
 
 int main(void)
 {
@@ -168,6 +170,34 @@ void TaskStart(void *p_arg)
                    (CPU_STK      *)&TaskUSARTStk[0],
                    (CPU_STK_SIZE  )TASK_USART_STK_SIZE / 10,
                    (CPU_STK_SIZE  )TASK_USART_STK_SIZE,
+                   (OS_MSG_QTY    )0,
+                   (OS_TICK       )0,
+                   (void         *)0,
+                   (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+                   (OS_ERR       *)&err);
+
+    OSTaskCreate  ((OS_TCB       *)&TaskSensorTCB,
+                   (CPU_CHAR     *)"Sensor Task",
+                   (OS_TASK_PTR   )TaskSensor,
+                   (void         *)0,
+                   (OS_PRIO       )TASK_SENSOR_PRIO,
+                   (CPU_STK      *)&TaskSensorStk[0],
+                   (CPU_STK_SIZE  )TASK_SENSOR_STK_SIZE / 10,
+                   (CPU_STK_SIZE  )TASK_SENSOR_STK_SIZE,
+                   (OS_MSG_QTY    )0,
+                   (OS_TICK       )0,
+                   (void         *)0,
+                   (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+                   (OS_ERR       *)&err);
+				   
+    OSTaskCreate  ((OS_TCB       *)&TaskTodoListTCB,
+                   (CPU_CHAR     *)"TodoList Task",
+                   (OS_TASK_PTR   )TaskTodoList,
+                   (void         *)0,
+                   (OS_PRIO       )TASK_TODOLIST_PRIO,
+                   (CPU_STK      *)&TaskTodoListStk[0],
+                   (CPU_STK_SIZE  )TASK_TODOLIST_STK_SIZE / 10,
+                   (CPU_STK_SIZE  )TASK_TODOLIST_STK_SIZE,
                    (OS_MSG_QTY    )0,
                    (OS_TICK       )0,
                    (void         *)0,
