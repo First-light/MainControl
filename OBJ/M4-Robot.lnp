@@ -8,6 +8,7 @@
 "..\obj\task_init.o"
 "..\obj\task_handle.o"
 "..\obj\task_sensor.o"
+"..\obj\task_list.o"
 "..\obj\myglobe.o"
 "..\obj\robotcan_basic.o"
 "..\obj\robotcan_commandlib.o"

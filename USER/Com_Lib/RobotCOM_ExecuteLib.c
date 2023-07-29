@@ -49,13 +49,16 @@ void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号
 	Echo_MM =Frame->Data.uint32_ts[0];
 }
 
-int32_t FrontLine = 0;//前轮偏移 0为无偏移
-int32_t BehindLine = 0;//后轮偏移
-	
+int16_t FrontLine = 0;//前轮偏移 0为无偏移
+int16_t BehindLine = 0;//后轮偏移
+uint8_t	FrontCount = 0;
+uint8_t BehindCount = 0;	
 void Usart_SubMainLine_8Claw(COMFrame *Frame)//串口接收循迹红外偏移量信号
 {
-	FrontLine = Frame->Data.int32_ts[0];
-	BehindLine = Frame->Data.int32_ts[1];
+	FrontLine = Frame->Data.int16_ts[0];
+	BehindLine = Frame->Data.int16_ts[1];
+	uint8_t	FrontCount = Frame->Data.uint8_ts[4];
+	uint8_t BehindCount = Frame->Data.uint8_ts[5];
 }
  
 uint8_t PointList[POINT_TYPE] ={0};
