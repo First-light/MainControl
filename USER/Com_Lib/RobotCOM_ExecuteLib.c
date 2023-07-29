@@ -12,23 +12,14 @@
 #include "RobotCOM_Basic.h"
 #include "RobotCOM_Proplist.h"
 
-void UART_SendByte(USART_TypeDef* USARTx,uint8_t data)
-{
-	while(!USART_GetFlagStatus(USARTx,USART_FLAG_TXE));//等上一次发完
-	USART_SendData(USARTx,data);
-	while(!USART_GetFlagStatus(USARTx,USART_FLAG_TXE));//USART_GetFlagStatus在检测到有数据为0，无数据为1
-	//这样编写存在问题，可以这样改进
-}
+uint32_t Echo_MM = 0;//超声波检测的距离（mm）
 
-void UART_SendString(USART_TypeDef* USARTx,char* string)
-{
-	 char* str = string;
-	 while(*str)//当str指向的字符不为空，则继续
-	 {
-		 UART_SendByte(USARTx,*str);
-		 str++;//指针
-	 }
-}
+int16_t FrontLine = 0;//前轮偏移 0为无偏移
+int16_t BehindLine = 0;//后轮偏移
+uint8_t	FrontCount = 0;
+uint8_t BehindCount = 0;
+
+uint8_t PointList[POINT_TYPE] ={0};
 
 void Usart_Test(COMFrame *Frame)//test
 {
@@ -42,17 +33,11 @@ void BlueTooth_Get_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换为控�
 
 
 
-uint32_t Echo_MM = 0;//超声波检测的距离（mm）
-
 void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号
 {
 	Echo_MM =Frame->Data.uint32_ts[0];
 }
 
-int16_t FrontLine = 0;//前轮偏移 0为无偏移
-int16_t BehindLine = 0;//后轮偏移
-uint8_t	FrontCount = 0;
-uint8_t BehindCount = 0;	
 void Usart_SubMainLine_8Claw(COMFrame *Frame)//串口接收循迹红外偏移量信号
 {
 	FrontLine = Frame->Data.int16_ts[0];
@@ -61,8 +46,6 @@ void Usart_SubMainLine_8Claw(COMFrame *Frame)//串口接收循迹红外偏移量
 	uint8_t BehindCount = Frame->Data.uint8_ts[5];
 }
  
-uint8_t PointList[POINT_TYPE] ={0};
-
 void Usart_SubMainPoint_8Claw(COMFrame *Frame)//串口接收负责点检测的传感器的信号
 {
 	PointList[LeftPoint] = Frame->Data.uint8_ts[0];

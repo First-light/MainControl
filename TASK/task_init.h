@@ -78,10 +78,17 @@ typedef enum{
 //每一步AUTO都有状态检测，达成指标则进行下一步，
 //运动和传感计算分离出来写函数
 
+typedef enum{
+	MANUAL_OFF,
+	MANUAL_ON,
+}ManualTypedef;
+
+
 typedef struct{
 	AttitudeTypedef Attitude;
 	LineModeTypedef LineMode;
 	TestTypedef TestMode;
+	ManualTypedef ManualMode;
 }RunningStruct;
 
  typedef struct {
@@ -89,6 +96,8 @@ typedef struct{
 	uint32_t move_GB;//前后，前为正，单位毫米
 	uint32_t move_LR;//左右，右为正
 }MoveStruct;//移动函数先执行旋转，再执行左右，再执行前后
+
+extern RunningStruct MainControlRun;
 
 
 #endif

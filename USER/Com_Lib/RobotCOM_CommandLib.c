@@ -34,6 +34,24 @@ void Renew_Site_2Claw(uint8_t site_order)
 //	}
 	/***************************************MYUSART4发送函数******************************************/
 
+void UART_SendByte(USART_TypeDef* USARTx,uint8_t data)
+{
+	while(!USART_GetFlagStatus(USARTx,USART_FLAG_TXE));//等上一次发完
+	USART_SendData(USARTx,data);
+	while(!USART_GetFlagStatus(USARTx,USART_FLAG_TXE));//USART_GetFlagStatus在检测到有数据为0，无数据为1
+	//这样编写存在问题，可以这样改进
+}
+
+void UART_SendString(USART_TypeDef* USARTx,char* string)
+{
+	 char* str = string;
+	 while(*str)//当str指向的字符不为空，则继续
+	 {
+		 UART_SendByte(USARTx,*str);
+		 str++;//指针
+	 }
+}
+
 void Test_Send(void)
 {
 	COMFrame SendFrame;
@@ -41,4 +59,9 @@ void Test_Send(void)
 	SendFrame.Prop = USART_TEST;
 	SendFrame.Data.uint8_ts[0] = 'A';
 	Send_Frame_COM(&SendFrame, MYUSART4);
+}
+
+void Task_Over_Send(void)
+{
+	UART_SendString(MY_USART4,"TASK_OVER\n");
 }

@@ -74,6 +74,10 @@ void Usart_SubMainLine_8Claw(COMFrame *Frame);
 void Usart_SubMainPoint_8Claw(COMFrame *Frame);
 
 /* ************************************ 发送函数 **************************************** */
+//不封装的串口信息发送
+void UART_SendByte(USART_TypeDef* USARTx,uint8_t data);
+void UART_SendString(USART_TypeDef* USARTx,char* string);
+void Task_Over_Send(void);//向蓝牙发送任务结束信息
 
 void Test_Send(void);
 	 

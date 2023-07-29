@@ -2,6 +2,9 @@
 #include "RobotCOM_proplist.h"
 #include "task_init.h"
 
+//小车状态信息结构体
+RunningStruct MainControlRun = 
+{AT_BRAKE,LINE_CC,TEST_ON,MANUAL_OFF};
 
 MoveStruct AutoMoveList[] ={
 	{90,0,0},
@@ -12,6 +15,7 @@ MoveStruct AutoMoveList[] ={
 };
 
 AttitudeTypedef AutoTaskList[] ={
+	AT_MANUAL,
 	AT_AUTO_TESTSTART,
 	AT_AUTO_FOLLOWLINE_SHORT,
 	AT_AUTO_FINDPOINT,
@@ -28,15 +32,48 @@ AttitudeTypedef AutoTaskList[] ={
 	AT_AUTO_SENSOR_MOVE,// 左转60
 	AT_AUTO_FOLLOWLINE_SHORT,
 	AT_MANUAL,
-	AT_BRAKE,
 };
+
+
 
 void TaskTodoList (void *p_arg)
 {
   	OS_ERR err;
+	AttitudeTypedef* list;
+	list = AutoTaskList;
+	uint8_t TodoListCount = sizeof(list)/sizeof(list[0]);
+	uint8_t TodoListNum = 0;
 
-
-	OSTimeDlyHMSM(0, 0, 0, 10, OS_OPT_TIME_HMSM_STRICT, &err);
+	while(TodoListNum < TodoListCount && list != 0)
+	{
+		MainControlRun.Attitude = list[TodoListNum];
+		switch (list[TodoListNum])
+		{
+			case AT_MANUAL:
+				MainControlRun.TestMode = TEST_OFF;
+				MainControlRun.ManualMode = MANUAL_ON;
+				while(MainControlRun.ManualMode == MANUAL_ON)
+				OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);
+				break;
+			case AT_MANUAL_TEST:
+				MainControlRun.TestMode = TEST_ON;
+				MainControlRun.ManualMode = MANUAL_ON;
+				while(MainControlRun.ManualMode == MANUAL_ON)
+				OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);
+				break;
+			default :
+				continue;
+		}		
+		TodoListNum++;
+	}
+	while(true)
+	{
+		Task_Over_Send();
+		OSTimeDlyHMSM(0, 0, 0,999, OS_OPT_TIME_HMSM_STRICT, &err);
+	}
+	OSTimeDlyHMSM(0, 0, 0, 999, OS_OPT_TIME_HMSM_STRICT, &err);
 }
+
+
 
 	

@@ -2,8 +2,7 @@
 #include "RobotCOM_proplist.h"
 #include "task_init.h"
 
-//小车状态信息结构体
-RunningStruct MainControlRun = {AT_BRAKE,LINE_CC,TEST_ON};
+
 
 void TaskSensor (void *p_arg)//
 {
