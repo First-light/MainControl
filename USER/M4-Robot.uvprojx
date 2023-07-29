@@ -458,6 +458,11 @@
               <FileType>1</FileType>
               <FilePath>.\task_list.c</FilePath>
             </File>
+            <File>
+              <FileName>task_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task_move.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
