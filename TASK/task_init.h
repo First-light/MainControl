@@ -92,10 +92,17 @@ typedef struct{
 }RunningStruct;
 
  typedef struct {
-	uint32_t Angle;//旋转的角度°逆时针为正,左转为正
-	uint32_t move_GB;//前后，前为正，单位毫米
-	uint32_t move_LR;//左右，右为正
-}MoveStruct;//移动函数先执行旋转，再执行左右，再执行前后
+	int32_t Angle;//旋转的角度°逆时针为正,左转为正
+	int32_t move_GB;//前后，前为正，单位毫米
+	int32_t move_LR;//左右，右为正
+}MoveStruct;//自动移动函数先执行旋转，再执行左右，再执行前后
+
+ typedef struct {
+	MotorTypeDef Motor_Left;
+	MotorTypeDef Motor_Right;
+	MotorTypeDef Motor_Behind;
+	MoveStruct posture;//直接接收陀螺仪传感器信号
+}ThreeWheel_Classic;
 
 extern RunningStruct MainControlRun;
 

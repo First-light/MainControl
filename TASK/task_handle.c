@@ -20,7 +20,7 @@ void TaskHandle(void *p_arg)
 					case PIDSPEED:						
 						Motor1.CurrentExpected = ClassicPidRegulate(Motor1.SpeedExpected,Motor1.SpeedMeasure,&MotorSpeedPid1);
 					
-          case MOTOR_CURRENT: 					 
+					case MOTOR_CURRENT: 					 
 					  Motor1.PWM = ClassicPidRegulate(Motor1.CurrentExpected,Motor1.CurrentMeasure,&MotorCurrentPid1);
 					
 					  break; 
