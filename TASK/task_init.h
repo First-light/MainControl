@@ -92,9 +92,9 @@ typedef struct{
 }RunningStruct;
 
  typedef struct {
+	int32_t Forth;//前后，前为正，单位毫米
+	int32_t Side;//左右，右为正
 	int32_t Angle;//旋转的角度°逆时针为正,左转为正
-	int32_t move_GB;//前后，前为正，单位毫米
-	int32_t move_LR;//左右，右为正
 }MoveStruct;//自动移动函数先执行旋转，再执行左右，再执行前后
 
  typedef struct {
@@ -103,6 +103,18 @@ typedef struct{
 	MotorTypeDef Motor_Behind;
 	MoveStruct posture;//直接接收陀螺仪传感器信号
 }ThreeWheel_Classic;
+ 
+typedef struct{
+	float Left;
+	float Right;
+	float Behind;
+}ThreeWheel_MoveDeliver;//三轮车的速度分解结构体
+
+typedef struct{
+	float 	Forth;
+	float	Side;
+	float 	Spin;
+}ThreeWheel_MoveParameter;//三轮车的速度分解结构体
 
 extern RunningStruct MainControlRun;
 
