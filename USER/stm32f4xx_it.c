@@ -170,7 +170,7 @@ void (MY_USART1_IRQHandler)(void)
 	if(USART_GetITStatus(MY_USART1, USART_IT_RXNE) == SET)
   {
     temp = USART_ReceiveData(MY_USART1);
-		Get_Frame_COM(temp, MYUSART1);
+	Get_Frame_COM(temp, MYUSART1);
   }	
 }
 

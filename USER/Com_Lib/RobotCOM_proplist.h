@@ -30,6 +30,7 @@ typedef enum {
 /* ************************************ 全局声明 **************************************** */
 
 extern uint32_t Echo_MM;//超声波检测的距离（mm）
+
 extern int16_t FrontLine;//前轮偏移 0为无偏移//向右为正
 extern int16_t BehindLine;//后轮偏移
 extern uint8_t	FrontCount;
