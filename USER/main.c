@@ -68,6 +68,7 @@ int main(void)
     delay_init();
     OSInit(&err);
 
+	
     /*创建起始任务*/
     OSTaskCreate ((OS_TCB       *)&TaskStartTCB,
                   (CPU_CHAR     *)"Task Start",
