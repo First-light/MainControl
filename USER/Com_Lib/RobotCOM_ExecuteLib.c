@@ -11,6 +11,9 @@
  */
 #include "RobotCOM_Basic.h"
 #include "RobotCOM_Proplist.h"
+#include "BluetoothStatic.h"
+#include "task_init.h"
+
 
 uint32_t Echo_MM = 0;//超声波检测的距离（mm）
 
@@ -21,14 +24,57 @@ uint8_t BehindCount = 0;
 
 uint8_t PointList[POINT_TYPE] ={0};
 
+
+
+uint8_t	BluetoothGetButton = 0;
+
+uint8_t BluetoothGetJoystickLX = 0;
+uint8_t BluetoothGetJoystickLY = 0;
+
+uint8_t BluetoothGetJoystickRX = 0;
+uint8_t BluetoothGetJoystickRY = 0;
+
+
+
 void Usart_Test(COMFrame *Frame)//test
 {
 	UART_SendString(USART6,"GREAT");
 }
 
-void BlueTooth_Get_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换为控制命令 
+void BlueTooth_Get_BUTTON_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换为控制命令 
 {
-	
+	BluetoothGetButton=Frame->Data.uint8_ts[0];
+
+	switch (BluetoothGetButton) {
+		case  goto_getleftring:
+			
+			break;
+		case  goto_getrightring:
+			break;
+		case  goto_leftshootplace:
+			break;
+		case  goto_rightshootplace:
+			break;
+		case  lock_chassis:
+			break;
+		case  shoot:
+			MainControlRun.ManualMode == MANUAL_OFF;
+			break;
+		
+		
+	}
+}
+
+void BlueTooth_Get_JOYSTICK_LEFT_4Claw(COMFrame *Frame)//按下左边手柄接受
+{
+   BluetoothGetJoystickLX=Frame->Data.uint8_ts[0];
+	 BluetoothGetJoystickLY=Frame->Data.uint8_ts[1];
+}
+
+void BlueTooth_Get_JOYSTICK_RIGHT_4Claw(COMFrame *Frame)
+{
+   BluetoothGetJoystickRX=Frame->Data.uint8_ts[0];
+	 BluetoothGetJoystickRY=Frame->Data.uint8_ts[1];
 }
 
 void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号

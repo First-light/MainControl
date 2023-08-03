@@ -38,6 +38,9 @@ extern uint8_t BehindCount;
 
 extern uint8_t PointList[POINT_TYPE];//点检测
 
+extern uint8_t JoystickLeftX;
+extern uint8_t JoystickLeftY;
+
 /* ************************************ 字典声明 **************************************** */
 
 extern COMFunDict g_My_USART1_Prop_Array[];
@@ -59,7 +62,10 @@ extern const uint8_t g_My_USART4_Prop_Count;
 /* ************************************ 属性值 **************************************** */
 
 #define USART_TEST 0x99
-#define BLUETOOTH_GET_4CLAW 0x41
+
+#define BLUETOOTH_GET_BUTTON_4CLAW 0x97
+#define BLUETOOTH_GET_JOYSTICKL_4CLAW 0x98
+#define BLUETOOTH_GET_JOYSTICKR_4CLAW 0x98
 
 #define USART_SUBMAINECHO_4CLAW 0x51
 #define USART_SUBMAINLINE_8CLAW 0x52
@@ -68,7 +74,9 @@ extern const uint8_t g_My_USART4_Prop_Count;
 /* ************************************ 处理函数 **************************************** */
 
 void Usart_Test(COMFrame *Frame);//test
-void BlueTooth_Get_4Claw(COMFrame *Frame);
+void BlueTooth_Get_BUTTON_4Claw(COMFrame *Frame);
+void BlueTooth_Get_JOYSTICK_LEFT_4Claw(COMFrame *Frame);
+void BlueTooth_Get_JOYSTICK_RIGHT_4Claw(COMFrame *Frame);
 
 void Usart_SubMainEcho_4Claw(COMFrame *Frame);
 void Usart_SubMainLine_8Claw(COMFrame *Frame);

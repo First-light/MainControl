@@ -430,6 +430,11 @@
               <FileType>5</FileType>
               <FilePath>.\easyset.h</FilePath>
             </File>
+            <File>
+              <FileName>BluetoothStatic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\BluetoothStatic.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

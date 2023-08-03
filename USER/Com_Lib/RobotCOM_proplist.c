@@ -31,7 +31,9 @@
 	};  */
 	COMFunDict g_My_USART4_Prop_Array[] = {	//А¶СА
 		{USART_TEST,Usart_Test},
-		{BLUETOOTH_GET_4CLAW,BlueTooth_Get_4Claw},
+		{BLUETOOTH_GET_BUTTON_4CLAW,BlueTooth_Get_BUTTON_4Claw},
+		{BLUETOOTH_GET_JOYSTICKL_4CLAW,BlueTooth_Get_JOYSTICK_LEFT_4Claw},
+		{BLUETOOTH_GET_JOYSTICKR_4CLAW,BlueTooth_Get_JOYSTICK_RIGHT_4Claw},	
 	};
 
 
