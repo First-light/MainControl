@@ -65,6 +65,8 @@ typedef enum{
 	TEST_ON,//测试模式打开时，电机进行pid计算但是不输出pwm
 } TestTypedef;
 
+
+
 typedef enum{
 	AT_BRAKE,
 	AT_MANUAL,
