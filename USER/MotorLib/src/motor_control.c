@@ -285,7 +285,7 @@ void PidInit(void)
 {
 	MotorCurrentPidInit();
 	MotorSpeedPidInit();	  
-  MotorPositionPidInit();
+	MotorPositionPidInit();
 }
 
 float VESCPidRegulate(float Reference, float PresentFeedback,ClassicPidStructTypedef *PID_Struct)
@@ -455,11 +455,11 @@ void MotorUpdate1(short I1, short I2,short I3,short I4)
 
 void Motor_Position_Update(float Motor1_position,float Motor2_position,float Motor3_position,float Motor4_position,float Motor5_position,float Motor6_position,float Motor7_position,float Motor8_position )
 {
-	Motor1.State=PIDSPEED;
+	Motor1.State=PIDPOSITION;
 	Motor2.State=PIDPOSITION;
 	Motor3.State=PIDPOSITION;
 	Motor4.State=PIDPOSITION;
-	Motor5.State=PIDSPEED;
+	Motor5.State=PIDPOSITION;
 	Motor6.State=PIDPOSITION;
 	Motor7.State=PIDPOSITION;
 	Motor8.State=PIDPOSITION;
@@ -475,6 +475,7 @@ void Motor_Position_Update(float Motor1_position,float Motor2_position,float Mot
 	Motor8.PositionExpected=Motor8_position;
 	//Motor3.SpeedExpected=Motor3_position;
 }
+
 void Difference1MotorSend(DifferenceTypeDef *Diffx){
 	Motor1.PositionExpected = Diffx->helm_angle;
 

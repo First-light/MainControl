@@ -36,9 +36,12 @@ void TaskMonitor(void *p_arg)
     OS_ERR err;
     while(1)
     { 
-		MotorUpdate1(200,0,0,0);
+		//MotorUpdate1(200,0,0,0);
 		Test_Send();
-        OSTimeDlyHMSM(0, 0, 0, 900, OS_OPT_TIME_HMSM_STRICT, &err);
+		UART_SendString(MY_USART4,"FrontLine : ");
+		UART_SendNum_Short(MY_USART4,FrontLine);
+		UART_SendString(MY_USART4,"\n");
+        OSTimeDlyHMSM(0, 0, 0, 100, OS_OPT_TIME_HMSM_STRICT, &err);
     }
 }
 
@@ -49,7 +52,6 @@ void TaskUSART(void *p_arg)
     OS_ERR err;
 		while(1)
 		{
-			//ZY_VisualScope_Send(Motorpitch.PositionMeasure,Pitch_Position_Motor,(Motorleft.SpeedMeasure)/100,(Motorleft.SpeedMeasure)/100);	
 			OSTimeDlyHMSM(0, 0, 0, 10, OS_OPT_TIME_HMSM_STRICT, &err);
 		}
 }

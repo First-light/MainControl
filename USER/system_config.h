@@ -29,7 +29,7 @@
 #define _USE_SPI
 #define _USE_TIM_FOR_VISUAL
 #define _USE_LED_WS2815b
-
+#define _USE_EASYSET
 
 #ifdef _USE_LED
 #include "Led.h"
@@ -73,6 +73,10 @@
 
 #ifdef _USE_LED_WS2815b
 #include "LED_WS2815b.h"
+#endif
+
+#ifdef _USE_EASYSET
+#include "easyset.h"
 #endif
 
 void System_Init(void);

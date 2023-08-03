@@ -7,6 +7,10 @@ void System_Init(void)
 	
 	globalTimInit();
 	
+	#ifdef _USE_EASYSET
+		EasySet();
+	#endif	
+	
 	#ifdef _USE_CAN1
 	CAN_Hard_Init(MYCAN1);
 	CAN_Hard_Init(MYCAN2);

@@ -3,7 +3,8 @@
 #include "task_init.h"
 #include "elmo.h"
 
-/*  2023/7/28
+/*  2023/7/31 整理者：徐哲轩
+
 创建新任务：
 task_init.h 添加task的 任务函数声明，任务开辟的空间，任务优先级
 main.c 声明添加task设置量的结构体， 声明CPU_STK数组
@@ -32,6 +33,7 @@ main.c定义任务OS_TCB（信息结构体）CPU_STK开辟任务空间
 task_init.h宏定义任务优先级，任务开辟空间，声明任务函数 （可以声明全局变量）
 task_init.c编写任务函数，定义全局变量
 （建议）task_xxx.c编写较大任务函数，然后在init.h里声明函数
+
 */
 
 static  OS_TCB   TaskStartTCB;
@@ -57,8 +59,8 @@ static  CPU_STK  TaskHandleStk[TASK_HANDLE_STK_SIZE];
 static  OS_TCB   TaskSensorTCB;
 static  CPU_STK  TaskSensorStk[TASK_MONITOR_STK_SIZE];
 
-static  OS_TCB   TaskTodoListTCB;
-static  CPU_STK  TaskTodoListStk[TASK_TODOLIST_STK_SIZE];
+static  OS_TCB   TaskMoveAnalyseTCB;
+static  CPU_STK  TaskMoveAnalyseStk[TASK_MOVEANALYSE_STK_SIZE];
 
 int main(void)
 {
@@ -190,7 +192,7 @@ void TaskStart(void *p_arg)
                    (void         *)0,
                    (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
                    (OS_ERR       *)&err);
-				   
+	/*			   
     OSTaskCreate  ((OS_TCB       *)&TaskTodoListTCB,
                    (CPU_CHAR     *)"TodoList Task",
                    (OS_TASK_PTR   )TaskTodoList,
@@ -204,7 +206,21 @@ void TaskStart(void *p_arg)
                    (void         *)0,
                    (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
                    (OS_ERR       *)&err);
-                   
+    */     
+    OSTaskCreate  ((OS_TCB       *)&TaskMoveAnalyseTCB,
+                   (CPU_CHAR     *)"MoveAnalyse Task",
+                   (OS_TASK_PTR   )TaskMoveAnalyse,
+                   (void         *)0,
+                   (OS_PRIO       )TASK_MOVEANALYSE_PRIO,
+                   (CPU_STK      *)&TaskMoveAnalyseStk[0],
+                   (CPU_STK_SIZE  )TASK_MOVEANALYSE_STK_SIZE / 10,
+                   (CPU_STK_SIZE  )TASK_MOVEANALYSE_STK_SIZE,
+                   (OS_MSG_QTY    )0,
+                   (OS_TICK       )0,
+                   (void         *)0,
+                   (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+                   (OS_ERR       *)&err);
+				   
     OSTaskSuspend((OS_TCB *)&TaskStartTCB, (OS_ERR *) &err);  //挂起起始任务    
 	OS_CRITICAL_EXIT();							 
 }

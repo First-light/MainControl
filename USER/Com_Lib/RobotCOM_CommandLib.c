@@ -52,6 +52,22 @@ void UART_SendString(USART_TypeDef* USARTx,char* string)
 	 }
 }
 
+void UART_SendNum_Short(USART_TypeDef* USARTx,int Num)//先将int转换为string，再输出，但是最大输出为64位int
+{
+	char temp[64] = {'\0'};
+	if ( Num < 0 )
+	{
+		Num = -Num;
+		temp[0] = '-';
+		CHAR_INT_Change(&temp[1],Num);
+	}
+	else
+	{
+		CHAR_INT_Change(temp,Num);
+	} 
+	UART_SendString(USARTx,temp);
+}
+
 void Test_Send(void)
 {
 	COMFrame SendFrame;

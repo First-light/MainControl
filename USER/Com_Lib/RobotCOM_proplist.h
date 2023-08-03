@@ -33,7 +33,7 @@ extern uint32_t Echo_MM;//超声波检测的距离（mm）
 
 extern int16_t FrontLine;//前轮偏移 0为无偏移//向右为正
 extern int16_t BehindLine;//后轮偏移
-extern uint8_t	FrontCount;
+extern uint8_t FrontCount;
 extern uint8_t BehindCount;
 
 extern uint8_t PointList[POINT_TYPE];//点检测
@@ -78,6 +78,8 @@ void Usart_SubMainPoint_8Claw(COMFrame *Frame);
 //不封装的串口信息发送
 void UART_SendByte(USART_TypeDef* USARTx,uint8_t data);
 void UART_SendString(USART_TypeDef* USARTx,char* string);
+void UART_SendNum_Short(USART_TypeDef* USARTx,int Num);
+	//先将int转换为string，再输出，但是最大输出为64位int
 void Task_Over_Send(void);//向蓝牙发送任务结束信息
 
 void Test_Send(void);

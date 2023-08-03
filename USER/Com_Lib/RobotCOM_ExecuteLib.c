@@ -31,8 +31,6 @@ void BlueTooth_Get_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换为控�
 	
 }
 
-
-
 void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号
 {
 	Echo_MM =Frame->Data.uint32_ts[0];
@@ -42,8 +40,8 @@ void Usart_SubMainLine_8Claw(COMFrame *Frame)//串口接收循迹红外偏移量
 {
 	FrontLine = Frame->Data.int16_ts[0];
 	BehindLine = Frame->Data.int16_ts[1];
-	uint8_t	FrontCount = Frame->Data.uint8_ts[4];
-	uint8_t BehindCount = Frame->Data.uint8_ts[5];
+	FrontCount = Frame->Data.uint8_ts[4];
+	BehindCount = Frame->Data.uint8_ts[5];
 }
  
 void Usart_SubMainPoint_8Claw(COMFrame *Frame)//串口接收负责点检测的传感器的信号
