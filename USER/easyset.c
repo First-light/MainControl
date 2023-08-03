@@ -15,7 +15,7 @@ void PWM_Set	(GPIO_TypeDef * GPIOx ,
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_Pin = pin;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;	
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;	
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_Init(GPIOx,&GPIO_InitStruct);//设置
 	
@@ -187,16 +187,16 @@ void CHAR_INT_Change(char* ar2,int32_t b)
 	} 
 }
 
+
 void EasySet(void)
-{
-	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE); //开启串口对应的GPIOA的时钟
-	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE); //开启串口对应的GPIOC的时钟
+{	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE); //开启串口对应的GPIOA的时钟
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE); //开启串口对应的GPIOC的时钟
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD,ENABLE); //开启串口对应的GPIOD的时钟
-	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE); //开启对应的TIM3的时钟  
 	
-	//PinMode(LED2_GPIO,LED2_Pin,OUTPUT,HIGH);//D2
-	//PinMode(LED3_GPIO,LED3_Pin,OUTPUT,HIGH);//D3
-	
+	PinMode(LED1_GPIO,LED1_Pin,OUTPUT,HIGH);//D1
+	PinMode(LED3_GPIO,LED3_Pin,OUTPUT,HIGH);//D3
+	PinMode(LED2_GPIO,LED2_Pin,OUTPUT,HIGH);//D2
 	//九个前端传感器信号接收
 	//PinMode(GPIOC,12,INPUT,HIGH);//最右端传感器
 	//PinMode(GPIOD,0,INPUT,HIGH);//中央

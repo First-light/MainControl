@@ -62,6 +62,8 @@ static  CPU_STK  TaskSensorStk[TASK_MONITOR_STK_SIZE];
 static  OS_TCB   TaskMoveAnalyseTCB;
 static  CPU_STK  TaskMoveAnalyseStk[TASK_MOVEANALYSE_STK_SIZE];
 
+void LED_Show(void);
+
 int main(void)
 {
     OS_ERR err;
@@ -97,16 +99,7 @@ void TaskStart(void *p_arg)
     Mem_Init();    // Initialize Memory Management Module
     Math_Init();
    // ElmoInit();
-
-    LED_On(RED_LED);
-    LED_On(GREEN_LED);
-    LED_On(BLUE_LED);
-    MyDelayms(500);
-    LED_Off(RED_LED);
-    LED_Off(GREEN_LED);
-    LED_Off(BLUE_LED);
-
-
+	LED_Show();
 	
 	OS_CRITICAL_ENTER();
     OSTaskCreate  ((OS_TCB       *)&TaskMonitorTCB,
@@ -206,7 +199,7 @@ void TaskStart(void *p_arg)
                    (void         *)0,
                    (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
                    (OS_ERR       *)&err);
-    */     
+    *//*     
     OSTaskCreate  ((OS_TCB       *)&TaskMoveAnalyseTCB,
                    (CPU_CHAR     *)"MoveAnalyse Task",
                    (OS_TASK_PTR   )TaskMoveAnalyse,
@@ -219,7 +212,7 @@ void TaskStart(void *p_arg)
                    (OS_TICK       )0,
                    (void         *)0,
                    (OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
-                   (OS_ERR       *)&err);
+                   (OS_ERR       *)&err);  */
 				   
     OSTaskSuspend((OS_TCB *)&TaskStartTCB, (OS_ERR *) &err);  //挂起起始任务    
 	OS_CRITICAL_EXIT();							 
@@ -230,4 +223,20 @@ void TaskStart(void *p_arg)
 void assert_failed(uint8_t* file, uint32_t line)
 {
 	
+}
+
+void LED_Show(void)
+{
+	for(int i = 0;i<3;i++)
+	{	
+ 	Pin_Up(LED2_GPIO,LED2_Pin);
+	Pin_Up(LED1_GPIO,LED1_Pin);
+	Pin_Up(LED3_GPIO,LED3_Pin);
+    MyDelayms(50);
+ 	Pin_Down(LED2_GPIO,LED2_Pin);
+	Pin_Down(LED1_GPIO,LED1_Pin);
+	Pin_Down(LED3_GPIO,LED3_Pin);
+	MyDelayms(80);
+	}
+	MyDelayms(300);
 }

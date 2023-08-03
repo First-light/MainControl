@@ -3,7 +3,7 @@
 
 void System_Init(void)
 {
-	GlobeVariableInit();
+	//GlobeVariableInit();
 	
 	globalTimInit();
 	

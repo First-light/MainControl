@@ -22,12 +22,10 @@ void TaskIndicate(void *p_arg)
     OS_ERR err;
     while(1)
     {
-        LED_Toggle(LED1);
-        OSTimeDlyHMSM(0, 0, 0, 300, OS_OPT_TIME_HMSM_STRICT, &err);
-        LED_Toggle(LED2);
-        OSTimeDlyHMSM(0, 0, 0, 300, OS_OPT_TIME_HMSM_STRICT, &err);
-        LED_Toggle(LED3);
-        OSTimeDlyHMSM(0, 0, 0, 300, OS_OPT_TIME_HMSM_STRICT, &err);
+		Pin_Up(LED2_GPIO,LED2_Pin);
+		OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);
+		Pin_Down(LED2_GPIO,LED2_Pin);
+		OSTimeDlyHMSM(0, 0, 0, 450, OS_OPT_TIME_HMSM_STRICT, &err);	
 	}
 }
 

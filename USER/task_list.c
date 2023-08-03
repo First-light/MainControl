@@ -72,13 +72,13 @@ void TaskTodoList (void *p_arg)
 				MainControlRun.TestMode = TEST_OFF;
 				MainControlRun.ManualMode = MANUAL_ON;
 				while(TaskTarget(list[TodoListNum]))
-				OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);				
+					OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);				
 				break;
 			case AT_MANUAL_TEST:
 				MainControlRun.TestMode = TEST_ON;
 				MainControlRun.ManualMode = MANUAL_ON;
 				while(TaskTarget(list[TodoListNum]))
-				OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);
+					OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);
 				break;
 			default :
 				continue;
@@ -90,7 +90,6 @@ void TaskTodoList (void *p_arg)
 		Task_Over_Send();
 		OSTimeDlyHMSM(0, 0, 0,999, OS_OPT_TIME_HMSM_STRICT, &err);
 	}
-	OSTimeDlyHMSM(0, 0, 0, 999, OS_OPT_TIME_HMSM_STRICT, &err);
 }
 
 
