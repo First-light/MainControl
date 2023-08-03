@@ -4,7 +4,7 @@
 
 //小车状态信息结构体
 RunningStruct MainControlRun = 
-{AT_BRAKE,LINE_CC,TEST_ON,MANUAL_OFF};
+{AT_BRAKE,LINE_CC,TEST_ON,MANUAL_OFF,0};
 
 #define CIRCLE_ON 1
 #define CIRCLE_OFF 0
@@ -18,6 +18,7 @@ MoveStruct AutoMoveList[] ={
 };
 
 AttitudeTypedef AutoTaskList[] ={
+	AT_BRAKE,
 	AT_MANUAL_TEST,
 	AT_AUTO_TESTSTART,
 	AT_AUTO_FOLLOWLINE_SHORT,
@@ -55,9 +56,11 @@ uint8_t TaskTarget(AttitudeTypedef task)
 }
 
 
-void TaskTodoList (void *p_arg)
+
+void TaskTodoList(void *p_arg)
 {
   	OS_ERR err;
+	
 	AttitudeTypedef* list;
 	list = AutoTaskList;
 	uint8_t TodoListCount = sizeof(list)/sizeof(list[0]);
@@ -65,6 +68,7 @@ void TaskTodoList (void *p_arg)
 
 	while(TodoListNum < TodoListCount && list != 0)
 	{
+		MainControlRun.Task_Num = TodoListNum;
 		MainControlRun.Attitude = list[TodoListNum];
 		switch (list[TodoListNum])
 		{
@@ -81,15 +85,17 @@ void TaskTodoList (void *p_arg)
 					OSTimeDlyHMSM(0, 0, 0, 50, OS_OPT_TIME_HMSM_STRICT, &err);
 				break;
 			default :
-				continue;
+				break;
 		}		
 		TodoListNum++;
 	}
+	
 	while(true)
 	{
 		Task_Over_Send();
 		OSTimeDlyHMSM(0, 0, 0,999, OS_OPT_TIME_HMSM_STRICT, &err);
 	}
+	
 }
 
 

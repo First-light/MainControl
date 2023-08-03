@@ -10,7 +10,7 @@
 #include "TurnArrow.h"
 #include "HoldGrip.h"
 #include "Archery.h"
-
+#include "task_init.h"
 
 
 //extern float Yaw_PC_Angle;
@@ -29,20 +29,14 @@ void TaskIndicate(void *p_arg)
 	}
 }
 
-void TaskMonitor(void *p_arg)
+/*void TaskMonitor(void *p_arg)
 {
     OS_ERR err;
     while(1)
     { 
-		//MotorUpdate1(200,0,0,0);
-		Test_Send();
-		UART_SendString(MY_USART4,"FrontLine : ");
-		UART_SendNum_Short(MY_USART4,FrontLine);
-		UART_SendString(MY_USART4,"\n");
-        OSTimeDlyHMSM(0, 0, 0, 100, OS_OPT_TIME_HMSM_STRICT, &err);
     }
 }
-
+*/
 
 /***********USART**********/
 void TaskUSART(void *p_arg)
@@ -50,7 +44,18 @@ void TaskUSART(void *p_arg)
     OS_ERR err;
 		while(1)
 		{
-			OSTimeDlyHMSM(0, 0, 0, 10, OS_OPT_TIME_HMSM_STRICT, &err);
+					//MotorUpdate1(200,0,0,0);
+			Test_Send();
+			UART_SendString(MY_USART4,"FrontLine : ");
+			UART_SendNum_Short(MY_USART4,FrontLine);
+			UART_SendString(MY_USART4,"\n");
+			UART_SendString(MY_USART4,"ARM_Position : ");
+			UART_SendNum_Short(MY_USART4,(uint32_t)MyCar.arm->PositionMeasure);
+			UART_SendString(MY_USART4,"\n");
+			UART_SendString(MY_USART4,"Task_Num : ");
+			UART_SendNum_Short(MY_USART4,(uint32_t)MainControlRun.Task_Num);
+			UART_SendString(MY_USART4,"\n");
+			OSTimeDlyHMSM(0, 0, 0,100, OS_OPT_TIME_HMSM_STRICT, &err);
 		}
 }
  

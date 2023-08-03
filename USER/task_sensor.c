@@ -27,7 +27,7 @@ void TaskSensor (void *p_arg)//
 	{MainControlRun.LineMode = LINE_BX;}
 	
 	
-	OSTimeDlyHMSM(0, 0, 0, 3, OS_OPT_TIME_HMSM_STRICT, &err);
+	OSTimeDlyHMSM(0, 0, 0, 1, OS_OPT_TIME_HMSM_STRICT, &err);
 }
 
 

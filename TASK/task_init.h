@@ -5,21 +5,21 @@
 
 /******************TASK PRIORITIES******************/
 #define  TASK_START_PRIO                               2u
-#define  TASK_HANDLE_PRIO                              15u 
+#define  TASK_HANDLE_PRIO                              22u 
 //#define  TASK_REGULATE_PRIO                          10u
-#define  TASK_MONITOR_PRIO                             20u
-#define  TASK_INDICATE_PRIO                            22u
+//#define  TASK_MONITOR_PRIO                             32u
+#define  TASK_INDICATE_PRIO                            42u
 #define  TASK_USART_PRIO                               3u   //串口任务
-#define  TASK_SENSOR_PRIO                          	   4u
+#define  TASK_SENSOR_PRIO                          	   7u
 #define	 TASK_TODOLIST_PRIO                            5u
-#define	 TASK_MOVEANALYSE_PRIO                         10u
+#define	 TASK_MOVEANALYSE_PRIO                         21u
 
 /******TASK STACK SIZES Size of the task stacks (# of OS_STK entries)*******/
-#define  TASK_START_STK_SIZE                 512u
-#define  TASK_MONITOR_STK_SIZE               512u
-#define  TASK_INDICATE_STK_SIZE              512u
+#define  TASK_START_STK_SIZE                 1024u
+//#define  TASK_MONITOR_STK_SIZE             256u
+#define  TASK_INDICATE_STK_SIZE              1024u
 //#define  TASK_REGULATE_STK_SIZE            2048u
-#define  TASK_USART_STK_SIZE                 2048u
+#define  TASK_USART_STK_SIZE                 1024u
 #define  TASK_HANDLE_STK_SIZE                2048u
 #define  TASK_SENSOR_STK_SIZE				 2048u
 #define  TASK_TODOLIST_STK_SIZE            	 2048u
@@ -27,17 +27,24 @@
 
 /*任务申明*/
 void TaskStart(void *p_arg);
-void TaskMonitor(void *p_arg);
+//void TaskMonitor(void *p_arg);
 //void TaskRegulate(void *p_arg);
 void TaskIndicate(void *p_arg);
 void TaskUSART(void *p_arg);
 void TaskHandle(void *p_arg);
 void TaskSensor (void *p_arg);
-void TaskTodoList (void *p_arg);
+void TaskTodoList(void *p_arg);
 void TaskMoveAnalyse(void *p_arg);
 /* ************************************ 宏定义 **************************************** */
+//定义左轮为motor2，右轮为motor3，后轮为motor4 ，顺时针为正？
+//定义手臂电机为motor1
+#define MOTOR_ARM       Motor1
+#define MOTOR_LEFT      Motor2
+#define MOTOR_RIGHT     Motor3
+#define MOTOR_BEHIND 	Motor4
 
-
+#define SIDE_BALANCE_P 0.433
+#define SPEEDLIMIT_MAX 400.0
 
 /* ************************************ 声明  **************************************** */
 
@@ -85,12 +92,17 @@ typedef enum{
 	MANUAL_ON,
 }ManualTypedef;
 
+typedef enum {
+	ROD_PULL,
+	ROD_PUSH,
+}RodTypedef;//推杆
 
 typedef struct{
-	AttitudeTypedef Attitude;
-	LineModeTypedef LineMode;
-	TestTypedef TestMode;
-	ManualTypedef ManualMode;
+	AttitudeTypedef 	Attitude;
+	LineModeTypedef 	LineMode;
+	TestTypedef 		TestMode;
+	ManualTypedef 		ManualMode;
+	uint8_t             Task_Num;
 }RunningStruct;
 
  typedef struct {
@@ -103,7 +115,6 @@ typedef struct{
 	MotorTypeDef* Motor_Left;
 	MotorTypeDef* Motor_Right;
 	MotorTypeDef* Motor_Behind;
-	MoveStruct posture;//直接接收陀螺仪传感器信号
 }ThreeWheel_Classic;//数据接收
  
 typedef struct{
@@ -118,8 +129,20 @@ typedef struct{
 	float 	Spin;
 }ThreeWheel_MoveParameter;//三轮车的速度分解结构体
 
-extern RunningStruct MainControlRun;
+typedef struct wheel3_degree1_clamp_smartcar
+{
+	ThreeWheel_Classic* classic;
+	MotorTypeDef* 		arm;
+	RodTypedef*			rod;	
+}Wheel3_Degree1_Clamp_SmartCar;
 
+
+extern RunningStruct 					MainControlRun;
+extern Wheel3_Degree1_Clamp_SmartCar 	MyCar;
+extern ThreeWheel_Classic 				My3Moter;
+extern RodTypedef 						GasPushRod;
+extern MoveStruct 						ManualExpected;//调整速度
+extern MoveStruct 						AutoExpected;//调整速度
 
 #endif
  
