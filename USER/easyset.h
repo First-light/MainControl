@@ -10,10 +10,15 @@
 #define HIGH 1
 #define LOW 0
 
-#define LED2_GPIO 		GPIOA
-#define LED2_Pin        6
-#define LED3_GPIO       GPIOA
-#define LED3_Pin        7
+//tim1和tim8是高级定时器
+//tim6和tim7是基本定时器
+
+#define LED1_GPIO 		GPIOA
+#define LED1_Pin        15
+#define LED2_GPIO 		GPIOB
+#define LED2_Pin        14
+#define LED3_GPIO       GPIOB
+#define LED3_Pin        15
 
 #define FRONTLINE_LEFT1_Pin 			1
 #define FRONTLINE_LEFT1_GPIOPin 		GPIO_Pin_1

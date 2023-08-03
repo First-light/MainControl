@@ -14,8 +14,8 @@
 #define MOTOR_ID_2           0x202//调距电机ID
 #define MOTOR_ID_3           0x203//圆弧电机ID
 
-#define _USE_LED
-#define _USE_SWITCH
+//#define _USE_LED
+//#define _USE_SWITCH
 #define _USE_CAN1
 #define _USE_EXT_IO
 #define _USE_LOCATE_USART
@@ -25,10 +25,10 @@
 //#define _USE_MOTOR
 #define _USE_ENCODER
 #define _USE_PID
-#define _USE_Cylinder
+//#define _USE_Cylinder
 #define _USE_SPI
 #define _USE_TIM_FOR_VISUAL
-#define _USE_LED_WS2815b
+//#define _USE_LED_WS2815b
 #define _USE_EASYSET
 
 #ifdef _USE_LED

@@ -1,19 +1,27 @@
 #include "system_config.h"
 #include "task_init.h"
+#include "motor_control.h"
 
-#define SIDE_BALANCE_P 0.433
-#define SPEEDLIMIT_MAX 400.0
+MoveStruct ManualExpected	= {0,0,0};//调整速度
+MoveStruct AutoExpected 	= {0,0,0};//调整速度
 
-//定义左轮为motor1，右轮为motor2，后轮为motor3 ，顺时针为正？
-MoveStruct ManualExpected;//调整速度
+RodTypedef GasPushRod;
 
-ThreeWheel_Classic My3Moter;
+ThreeWheel_Classic My3Moter = {
+	(MotorTypeDef*)&MOTOR_LEFT,
+	(MotorTypeDef*)&MOTOR_RIGHT,
+	(MotorTypeDef*)&MOTOR_BEHIND	
+};
+
+Wheel3_Degree1_Clamp_SmartCar MyCar = {
+	&My3Moter,
+	(MotorTypeDef*)&MOTOR_ARM,
+	&GasPushRod
+};
 
 ThreeWheel_MoveDeliver Forth; //前后
 ThreeWheel_MoveDeliver Side;//左右
 ThreeWheel_MoveDeliver Spin;//旋转
-
-
 
 ThreeWheel_MoveParameter Manual_P = {
 	2.0,//前后
@@ -51,7 +59,8 @@ void ManualMoveDeliver(MoveStruct Expected)
 void TaskMoveAnalyse(void *p_arg)
 {
   	OS_ERR err;
-	while(1){
+	while(1)
+	{
 		if(MainControlRun.ManualMode == MANUAL_ON)//负责手动模式
 		{
 			ManualMoveDeliver(ManualExpected);	
@@ -59,7 +68,7 @@ void TaskMoveAnalyse(void *p_arg)
 		else if(0)
 		{
 			
-		}
+		}  
 		OSTimeDlyHMSM(0, 0, 0, 1, OS_OPT_TIME_HMSM_STRICT, &err);
 	}
 }
