@@ -46,8 +46,7 @@ void BlueTooth_Get_BUTTON_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换
 	BluetoothGetButton=Frame->Data.uint8_ts[0];
 
 	switch (BluetoothGetButton) {
-		case  goto_getleftring:
-			
+		case  goto_getleftring:	
 			break;
 		case  goto_getrightring:
 			break;
@@ -59,6 +58,8 @@ void BlueTooth_Get_BUTTON_4Claw(COMFrame *Frame)//蓝牙接受信号，并转换
 			break;
 		case  shoot:
 			MainControlRun.ManualMode = MANUAL_OFF;
+		
+		//可以的话，加一个控制气缸和控制手臂电机的指令
 			break;			
 	}
 }

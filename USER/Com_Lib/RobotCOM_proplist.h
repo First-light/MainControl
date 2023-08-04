@@ -65,11 +65,12 @@ extern const uint8_t g_My_USART4_Prop_Count;
 
 #define BLUETOOTH_GET_BUTTON_4CLAW 0x98
 #define BLUETOOTH_GET_JOYSTICKL_4CLAW 0x50
-#define BLUETOOTH_GET_JOYSTICKR_4CLAW 0x51
+#define BLUETOOTH_GET_JOYSTICKR_4CLAW 0x51 //阿哲，如果有标签值重复了，记得和Xiao_xiao说一声哦
 
-#define USART_SUBMAINECHO_4CLAW 0x51
-#define USART_SUBMAINLINE_8CLAW 0x52
-#define USART_SUBMAINPOINT_8CLAW 0x53
+#define USART_SUBMAINECHO_4CLAW 0x62
+#define USART_SUBMAINLINE_8CLAW 0x63
+#define USART_SUBMAINPOINT_8CLAW 0x64
+#define USART_MAINACTIONS_8CLAW  0x65
 
 /* ************************************ 处理函数 **************************************** */
 
@@ -89,7 +90,7 @@ void UART_SendString(USART_TypeDef* USARTx,char* string);
 void UART_SendNum_Short(USART_TypeDef* USARTx,int Num);
 	//先将int转换为string，再输出，但是最大输出为64位int
 void Task_Over_Send(void);//向蓝牙发送任务结束信息
-
+void Action_Send(void); //USART1是SubBoard
 void Test_Send(void);
 	 
 #endif
