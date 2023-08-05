@@ -158,9 +158,9 @@ void MotorPositionPidInit(void)
 {
   MotorPositionPid1.Kp = 1.0f;
 	MotorPositionPid1.Ki = 0.0f;   
-	MotorPositionPid1.Kd = 4.1f;
-	MotorPositionPid1.LimitOutput = 250.0f;// 
-	MotorPositionPid1.LimitIntegral = 250.0f;
+	MotorPositionPid1.Kd = 5.0f;  //5.0
+	MotorPositionPid1.LimitOutput = 80.0f;//80 
+	MotorPositionPid1.LimitIntegral = 250.0f;//
 	MotorPositionPid1.Integral = 0;
 	MotorPositionPid1.PreError = 0;
     

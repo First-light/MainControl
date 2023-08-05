@@ -203,16 +203,16 @@ void TaskHandle(void *p_arg)
 					
 			}
 
-			if(MainControlRun.TestMode == TEST_OFF)
-			{
+			//if(MainControlRun.TestMode == TEST_OFF)
+			//{
 				MotorUpdate(Motor1.PWM,Motor2.PWM,Motor3.PWM,Motor4.PWM);
 				MotorUpdate1(Motor5.PWM,Motor6.PWM,Motor7.PWM,Motor8.PWM);
-			}
-			else
-			{
-				MotorUpdate(0,0,0,0);
-				MotorUpdate1(0,0,0,0);			
-			}//如果开启测试模式，电调不输出电流
+			//}
+			//else
+			//{
+			//	MotorUpdate(0,0,0,0);
+			//	MotorUpdate1(0,0,0,0);			
+			//}//如果开启测试模式，电调不输出电流
 
     	OSTimeDlyHMSM(0, 0, 0, 1, OS_OPT_TIME_HMSM_STRICT, &err);
   	} 

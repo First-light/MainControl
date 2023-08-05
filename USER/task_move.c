@@ -34,8 +34,8 @@ ThreeWheel_MoveParameter Manual_P = {
 
 void Actions()
 {
-	if(ArmPos == POS_ON) 	MyCar.arm->PositionExpected = ARM_POS_UP;//float	
-	else 					MyCar.arm->PositionExpected = ARM_POS_DOWN;
+	if(ArmPos == POS_ON) 	MyCar.arm->PositionExpected = ARM_POS_PLUS ;//float	
+	else 					MyCar.arm->PositionExpected = 0 ;
 	
 	Action_Send();
 }
@@ -72,10 +72,13 @@ void TaskMoveAnalyse(void *p_arg)
   	OS_ERR err;
 	while(1)
 	{
+		MyCar.arm->State = PIDPOSITION;
 		if(MainControlRun.ManualMode == MANUAL_ON)//负责手动模式
 		{   
+			
 			ManualMoveDeliver(ManualExpected);	
 			Actions();
+			
 			
 		}
 		else if(0)
