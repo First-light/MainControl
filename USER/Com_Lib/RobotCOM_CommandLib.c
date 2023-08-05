@@ -11,8 +11,18 @@
  */
 #include "RobotCOM_Basic.h"
 #include "RobotCOM_proplist.h"
+#include "task_init.h"
 
 	/***************************************MYUSART1发送函数******************************************/
+void Action_Send(void) //USART1是SubBoard
+{
+	COMFrame SendFrame;
+	SendFrame.Length = 8;
+	SendFrame.Prop = USART_MAINACTIONS_8CLAW;
+	SendFrame.Data.uint8_ts[0] = (uint8_t)GasPushRod;
+	Send_Frame_COM(&SendFrame, MYUSART1);
+}//发送信息到SubBoard控制气推杆
+
 /*	
 void Renew_Site_2Claw(uint8_t site_order)
 {

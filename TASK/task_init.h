@@ -43,10 +43,24 @@ void TaskMoveAnalyse(void *p_arg);
 #define MOTOR_RIGHT     Motor3
 #define MOTOR_BEHIND 	Motor4
 
+#define ARM_POS_UP      0.0
+#define ARM_POS_DOWN    0.0
+
+
 #define SIDE_BALANCE_P 0.433
 #define SPEEDLIMIT_MAX 400.0
 
 /* ************************************ 声明  **************************************** */
+
+typedef enum {
+	ROD_PULL,
+	ROD_PUSH,
+}RodTypedef;//推杆
+
+typedef enum {
+	POS_OFF,
+	POS_ON,
+}PosTypedef;
 
 typedef enum{
 	LINE_FB_O,//前后异侧出线
@@ -92,10 +106,6 @@ typedef enum{
 	MANUAL_ON,
 }ManualTypedef;
 
-typedef enum {
-	ROD_PULL,
-	ROD_PUSH,
-}RodTypedef;//推杆
 
 typedef struct{
 	AttitudeTypedef 	Attitude;
@@ -115,7 +125,7 @@ typedef struct{
 	MotorTypeDef* Motor_Left;
 	MotorTypeDef* Motor_Right;
 	MotorTypeDef* Motor_Behind;
-}ThreeWheel_Classic;//数据接收
+}W3Classic;//数据接收
  
 typedef struct{
 	float Left;
@@ -131,16 +141,17 @@ typedef struct{
 
 typedef struct wheel3_degree1_clamp_smartcar
 {
-	ThreeWheel_Classic* classic;
+	W3Classic* classic;
 	MotorTypeDef* 		arm;
 	RodTypedef*			rod;	
-}Wheel3_Degree1_Clamp_SmartCar;
+}W3D1ClampCar;
 
 
 extern RunningStruct 					MainControlRun;
-extern Wheel3_Degree1_Clamp_SmartCar 	MyCar;
-extern ThreeWheel_Classic 				My3Moter;
+extern W3D1ClampCar 					MyCar;
+extern W3Classic 						My3Moter;
 extern RodTypedef 						GasPushRod;
+extern PosTypedef 						ArmPos;
 extern MoveStruct 						ManualExpected;//调整速度
 extern MoveStruct 						AutoExpected;//调整速度
 

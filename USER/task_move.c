@@ -1,19 +1,22 @@
 #include "system_config.h"
 #include "task_init.h"
 #include "motor_control.h"
+#include "RobotCOM_proplist.h"
 
 MoveStruct ManualExpected	= {0,0,0};//调整速度
 MoveStruct AutoExpected 	= {0,0,0};//调整速度
 
-RodTypedef GasPushRod;
+RodTypedef GasPushRod = ROD_PULL;
 
-ThreeWheel_Classic My3Moter = {
+PosTypedef ArmPos = POS_OFF;
+
+W3Classic My3Moter = {
 	(MotorTypeDef*)&MOTOR_LEFT,
 	(MotorTypeDef*)&MOTOR_RIGHT,
 	(MotorTypeDef*)&MOTOR_BEHIND	
 };
 
-Wheel3_Degree1_Clamp_SmartCar MyCar = {
+W3D1ClampCar MyCar = {
 	&My3Moter,
 	(MotorTypeDef*)&MOTOR_ARM,
 	&GasPushRod
@@ -28,6 +31,14 @@ ThreeWheel_MoveParameter Manual_P = {
 	1.0,//左右
 	1.0,//旋转
 };
+
+void Actions()
+{
+	if(ArmPos == POS_ON) 	MyCar.arm->PositionExpected = ARM_POS_UP;//float	
+	else 					MyCar.arm->PositionExpected = ARM_POS_DOWN;
+	
+	Action_Send();
+}
 
 void ManualMoveDeliver(MoveStruct Expected)
 {
@@ -62,8 +73,10 @@ void TaskMoveAnalyse(void *p_arg)
 	while(1)
 	{
 		if(MainControlRun.ManualMode == MANUAL_ON)//负责手动模式
-		{
+		{   
 			ManualMoveDeliver(ManualExpected);	
+			Actions();
+			
 		}
 		else if(0)
 		{
