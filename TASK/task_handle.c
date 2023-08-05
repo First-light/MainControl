@@ -13,6 +13,7 @@ void TaskHandle(void *p_arg)
   	OS_ERR err;
   	uint8_t count;
   	while (1) {
+			Motor5.State = PIDPOSITION;
 		 	switch(Motor1.State)
 			{
 					case PIDPOSITION:				
@@ -201,7 +202,7 @@ void TaskHandle(void *p_arg)
 						break;
 					
 			}
-			
+
 			if(MainControlRun.TestMode == TEST_OFF)
 			{
 				MotorUpdate(Motor1.PWM,Motor2.PWM,Motor3.PWM,Motor4.PWM);
@@ -212,7 +213,7 @@ void TaskHandle(void *p_arg)
 				MotorUpdate(0,0,0,0);
 				MotorUpdate1(0,0,0,0);			
 			}//如果开启测试模式，电调不输出电流
-			
+
     	OSTimeDlyHMSM(0, 0, 0, 1, OS_OPT_TIME_HMSM_STRICT, &err);
   	} 
 }

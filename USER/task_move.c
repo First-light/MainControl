@@ -73,9 +73,10 @@ void TaskMoveAnalyse(void *p_arg)
 	while(1)
 	{
 		if(MainControlRun.ManualMode == MANUAL_ON)//负责手动模式
-		{
+		{   
 			ManualMoveDeliver(ManualExpected);	
 			Actions();
+			
 		}
 		else if(0)
 		{
