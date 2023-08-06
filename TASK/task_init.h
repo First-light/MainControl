@@ -43,7 +43,7 @@ void TaskMoveAnalyse(void *p_arg);
 #define MOTOR_RIGHT     Motor3
 #define MOTOR_BEHIND 	Motor4
 
-#define ARM_POS_PLUS      366.0
+#define ARM_POS_PLUS      364.0
 
 
 #define SIDE_BALANCE_P 0.433

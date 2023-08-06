@@ -32,6 +32,12 @@ ThreeWheel_MoveParameter Manual_P = {
 	1.0,//旋转
 };
 
+ThreeWheel_MoveDeliver MotorBalance = {
+	1.0,
+	0.527,
+	1.0,
+};
+
 void Actions()
 {
 	if(ArmPos == POS_ON) 	MyCar.arm->PositionExpected = ARM_POS_PLUS ;//float	
@@ -40,15 +46,15 @@ void Actions()
 	Action_Send();
 }
 
-void ManualMoveDeliver(MoveStruct Expected)
+void SpeedDeliver(MoveStruct Expected,ThreeWheel_MoveParameter P)
 {
-	Forth.Left = -Expected.Forth * Manual_P.Forth;
-	Forth.Right = Expected.Forth * Manual_P.Forth;
+	Forth.Left = -Expected.Forth * P.Forth;
+	Forth.Right = Expected.Forth * P.Forth;
 	Forth.Behind = 0.0;
 	
 	Side.Left = Expected.Side * Manual_P.Side;
 	Side.Right = Expected.Side * Manual_P.Side;
-	Side.Behind = -SIDE_BALANCE_P * Manual_P.Side;
+	Side.Behind = -SIDE_BALANCE_P * Expected.Side * Manual_P.Side;
 	
 	Spin.Left = -Expected.Angle * Manual_P.Spin;
 	Spin.Right = -Expected.Angle * Manual_P.Spin;
@@ -60,26 +66,31 @@ void ManualMoveDeliver(MoveStruct Expected)
 	
 	My3Moter.Motor_Left->State = PIDSPEED;
 	My3Moter.Motor_Right->State = PIDSPEED;
-	My3Moter.Motor_Behind->State = PIDSPEED;
-	
-	My3Moter.Motor_Left->SpeedExpected = LeftSpeed;
-	My3Moter.Motor_Right->SpeedExpected = RightSpeed;
-	My3Moter.Motor_Behind->SpeedExpected = BehindSpeed;
+	My3Moter.Motor_Behind->State = PIDSPEED;	
+
+	My3Moter.Motor_Left->SpeedExpected = LeftSpeed * MotorBalance.Left;
+	My3Moter.Motor_Right->SpeedExpected = RightSpeed * MotorBalance.Right;
+	My3Moter.Motor_Behind->SpeedExpected = BehindSpeed * MotorBalance.Behind;
 }
 
 void TaskMoveAnalyse(void *p_arg)
 {
   	OS_ERR err;
+	My3Moter.Motor_Left->State = PIDSPEED;
+	My3Moter.Motor_Right->State = PIDSPEED;
+	My3Moter.Motor_Behind->State = PIDSPEED;
+	My3Moter.Motor_Left->SpeedExpected = 0;
+	My3Moter.Motor_Right->SpeedExpected = 0;
+	My3Moter.Motor_Behind->SpeedExpected = 0;
+	
+	OSTimeDlyHMSM(0, 0, 0, 500, OS_OPT_TIME_HMSM_STRICT, &err);
 	while(1)
 	{
 		MyCar.arm->State = PIDPOSITION;
 		if(MainControlRun.ManualMode == MANUAL_ON)//负责手动模式
 		{   
-			
-			ManualMoveDeliver(ManualExpected);	
+			SpeedDeliver(ManualExpected,Manual_P);	
 			Actions();
-			
-			
 		}
 		else if(0)
 		{

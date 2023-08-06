@@ -107,12 +107,10 @@ void TaskHandle(void *p_arg)
 						Motor4.CurrentExpected = ClassicPidRegulate(Motor4.SpeedExpected,Motor4.SpeedMeasure,&MotorSpeedPid4);
 					
 					case MOTOR_CURRENT:			  
-						Motor4.PWM = ClassicPidRegulate(Motor4.CurrentExpected,Motor4.CurrentMeasure,&MotorCurrentPid4);
-						
+						Motor4.PWM = ClassicPidRegulate(Motor4.CurrentExpected,Motor4.CurrentMeasure,&MotorCurrentPid4);		
 						break;
 					case MOTOR_PWM:	
-						break;
-					
+						break;		
 					default:
 						Motor4.PWM = 0;
 						break;
@@ -142,6 +140,7 @@ void TaskHandle(void *p_arg)
 			}
 			switch(Motor6.State)
 			{
+				
 					case PIDPOSITION:
 						Motor6.SpeedExpected =  ClassicPidRegulate(Motor6.PositionExpected,Motor6.PositionMeasure,&MotorPositionPid6);
 					case PIDSPEED:							
