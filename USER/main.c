@@ -35,6 +35,9 @@ task_init.c编写任务函数，定义全局变量
 （建议）task_xxx.c编写较大任务函数，然后在init.h里声明函数
 
 关于MainBoard和SubBoard，注意时刻保持prop.h和其他h文件同步
+
+关于电机减速比，在stm32f4xx_it.c中修改减速比，2006对应36.0f，3508对应19.0f
+调试电机debug跑飞问题：在debug内处于闭环，退出瞬间进入开环，电机持续收到电流，会跑飞，暂时除了断电没有办法
 */
 
 static  OS_TCB   TaskStartTCB;
