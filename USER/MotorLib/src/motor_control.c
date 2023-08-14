@@ -30,15 +30,15 @@ void MotorCurrentPidInit(void)
 	MotorCurrentPid1.Integral = 0;
 	MotorCurrentPid1.PreError = 0;
     
-  MotorCurrentPid2.Kp = 1.0f;
-	MotorCurrentPid2.Ki = 0.01f; 
+	MotorCurrentPid2.Kp = 1.3f;
+	MotorCurrentPid2.Ki = 0.03f; 
 	MotorCurrentPid2.Kd = 0.0f;
 	MotorCurrentPid2.LimitOutput = 16000.0f;
-	MotorCurrentPid2.LimitIntegral = 16000.0f;
+	MotorCurrentPid2.LimitIntegral = 3800.0f;
 	MotorCurrentPid2.Integral = 0;
 	MotorCurrentPid2.PreError = 0;
 
-  MotorCurrentPid3.Kp = 1.3f;
+	MotorCurrentPid3.Kp = 1.3f;
 	MotorCurrentPid3.Ki = 0.03f; 
 	MotorCurrentPid3.Kd = 0.0f;
 	MotorCurrentPid3.LimitOutput = 16000.0f;
@@ -89,33 +89,33 @@ void MotorCurrentPidInit(void)
 
 void MotorSpeedPidInit(void)
 {
-  MotorSpeedPid1.Kp = 200.0f;  
+	MotorSpeedPid1.Kp = 200.0f;  
 	MotorSpeedPid1.Ki =1.0f;     
-	MotorSpeedPid1.Kd = 0.0f;
+	MotorSpeedPid1.Kd = 0.1f;
 	MotorSpeedPid1.LimitOutput = 10000.0f;
 	MotorSpeedPid1.LimitIntegral = 10000.0f;
 	MotorSpeedPid1.Integral = 0;
 	MotorSpeedPid1.PreError = 0;
     
-  MotorSpeedPid2.Kp = 500.0f;//250
-	MotorSpeedPid2.Ki =1.0f;//5    
-	MotorSpeedPid2.Kd = 0.0f;
-	MotorSpeedPid2.LimitOutput = 10000.0f;
-	MotorSpeedPid2.LimitIntegral = 10000.0f;
+	MotorSpeedPid2.Kp = 400.0f;//250
+	MotorSpeedPid2.Ki =0.0f;//5    
+	MotorSpeedPid2.Kd = 1.0f;
+	MotorSpeedPid2.LimitOutput = 5000.0f;
+	MotorSpeedPid2.LimitIntegral = 5000.0f;
 	MotorSpeedPid2.Integral = 0;
 	MotorSpeedPid2.PreError = 0;
     
-  MotorSpeedPid3.Kp = 600.0f;//500
-	MotorSpeedPid3.Ki =1.5f;//5
-	MotorSpeedPid3.Kd = 0.0f;
-	MotorSpeedPid3.LimitOutput = 4000.0f;
+	MotorSpeedPid3.Kp = 400.0f;//500
+	MotorSpeedPid3.Ki =0.0f;//5
+	MotorSpeedPid3.Kd = 1.0f;
+	MotorSpeedPid3.LimitOutput = 5000.0f;
 	MotorSpeedPid3.LimitIntegral = 5000.0f;
 	MotorSpeedPid3.Integral = 0;
 	MotorSpeedPid3.PreError = 0;
 	
-	MotorSpeedPid4.Kp = 300.0f;  
-	MotorSpeedPid4.Ki =1.0f;
-	MotorSpeedPid4.Kd = 0.0f;
+	MotorSpeedPid4.Kp = 400.0f;  
+	MotorSpeedPid4.Ki =0.0f;
+	MotorSpeedPid4.Kd = 1.0f;
 	MotorSpeedPid4.LimitOutput =5000.0f;
 	MotorSpeedPid4.LimitIntegral = 5000.0f;
 	MotorSpeedPid4.Integral = 0;
@@ -156,11 +156,11 @@ void MotorSpeedPidInit(void)
 
 void MotorPositionPidInit(void)
 {
-  MotorPositionPid1.Kp = 1.0f;
+	MotorPositionPid1.Kp = 1.0f;
 	MotorPositionPid1.Ki = 0.0f;   
-	MotorPositionPid1.Kd = 4.1f;
-	MotorPositionPid1.LimitOutput = 250.0f;// 
-	MotorPositionPid1.LimitIntegral = 250.0f;
+	MotorPositionPid1.Kd = 5.0f;  //5.0
+	MotorPositionPid1.LimitOutput = 80.0f;//80 
+	MotorPositionPid1.LimitIntegral = 250.0f;//
 	MotorPositionPid1.Integral = 0;
 	MotorPositionPid1.PreError = 0;
     
@@ -172,7 +172,7 @@ void MotorPositionPidInit(void)
 	MotorPositionPid2b.Integral = 0;
 	MotorPositionPid2b.PreError = 0;
 	
-  MotorPositionPid2.Kp = 0.5f;
+	MotorPositionPid2.Kp = 0.5f;
 	MotorPositionPid2.Ki = 0.0f;
 	MotorPositionPid2.Kd = 0.0f;
 	MotorPositionPid2.LimitOutput = 500.0f;// 280
@@ -196,7 +196,7 @@ void MotorPositionPidInit(void)
 	MotorPositionPid2t.Integral = 0;
 	MotorPositionPid2t.PreError = 0;
    
-  MotorPositionPid3.Kp = 1.5f;//1.5
+	MotorPositionPid3.Kp = 1.5f;//1.5
 	MotorPositionPid3.Ki = 0.0f;
 	MotorPositionPid3.Kd = 3.8f;//6.5
 	MotorPositionPid3.LimitOutput = 500.0f;// 
@@ -463,6 +463,29 @@ void Motor_Position_Update(float Motor1_position,float Motor2_position,float Mot
 	Motor6.State=PIDPOSITION;
 	Motor7.State=PIDPOSITION;
 	Motor8.State=PIDPOSITION;
+	//Motor3.State=PIDSPEED;
+	
+	Motor1.PositionExpected=Motor1_position;
+	Motor2.PositionExpected=Motor2_position;
+	Motor3.PositionExpected=Motor3_position;
+	Motor4.PositionExpected=Motor4_position;
+	Motor5.PositionExpected=Motor5_position;
+	Motor6.PositionExpected=Motor6_position;
+	Motor7.PositionExpected=Motor7_position;
+	Motor8.PositionExpected=Motor8_position;
+	//Motor3.SpeedExpected=Motor3_position;
+}
+
+void Motor_Speed_Update(float Motor1_position,float Motor2_position,float Motor3_position,float Motor4_position,float Motor5_position,float Motor6_position,float Motor7_position,float Motor8_position )
+{
+	Motor1.State=PIDSPEED;
+	Motor2.State=PIDSPEED;
+	Motor3.State=PIDSPEED;
+	Motor4.State=PIDSPEED;
+	Motor5.State=PIDSPEED;
+	Motor6.State=PIDSPEED;
+	Motor7.State=PIDSPEED;
+	Motor8.State=PIDSPEED;
 	//Motor3.State=PIDSPEED;
 	
 	Motor1.PositionExpected=Motor1_position;

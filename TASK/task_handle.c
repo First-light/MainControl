@@ -11,9 +11,9 @@ RobotCtrl_t RobotCtrl;
 void TaskHandle(void *p_arg)
 {
   	OS_ERR err;
-  	uint8_t count;
+  	uint8_t count;	
   	while (1) {
-			Motor5.State = PIDPOSITION;
+			//Motor5.State = PIDPOSITION;
 		 	switch(Motor1.State)
 			{
 					case PIDPOSITION:				
@@ -107,12 +107,10 @@ void TaskHandle(void *p_arg)
 						Motor4.CurrentExpected = ClassicPidRegulate(Motor4.SpeedExpected,Motor4.SpeedMeasure,&MotorSpeedPid4);
 					
 					case MOTOR_CURRENT:			  
-						Motor4.PWM = ClassicPidRegulate(Motor4.CurrentExpected,Motor4.CurrentMeasure,&MotorCurrentPid4);
-						
+						Motor4.PWM = ClassicPidRegulate(Motor4.CurrentExpected,Motor4.CurrentMeasure,&MotorCurrentPid4);		
 						break;
 					case MOTOR_PWM:	
-						break;
-					
+						break;		
 					default:
 						Motor4.PWM = 0;
 						break;
@@ -142,6 +140,7 @@ void TaskHandle(void *p_arg)
 			}
 			switch(Motor6.State)
 			{
+				
 					case PIDPOSITION:
 						Motor6.SpeedExpected =  ClassicPidRegulate(Motor6.PositionExpected,Motor6.PositionMeasure,&MotorPositionPid6);
 					case PIDSPEED:							
@@ -202,7 +201,21 @@ void TaskHandle(void *p_arg)
 						break;
 					
 			}
-
+			
+			if(
+			Motor1.SpeedMeasure > SPEEDLIMIT ||
+			Motor2.SpeedMeasure > SPEEDLIMIT ||
+			Motor3.SpeedMeasure > SPEEDLIMIT ||
+			Motor4.SpeedMeasure > SPEEDLIMIT ||
+			Motor5.SpeedMeasure > SPEEDLIMIT ||
+			Motor6.SpeedMeasure > SPEEDLIMIT ||
+			Motor7.SpeedMeasure > SPEEDLIMIT ||
+			Motor8.SpeedMeasure > SPEEDLIMIT )
+			{
+				MainControlRun.TestMode = TEST_ON ;
+				MainControlRun.Heavy_Error = ERROR_TOO_FAST; //³¬ËÙ
+			}
+			
 			if(MainControlRun.TestMode == TEST_OFF)
 			{
 				MotorUpdate(Motor1.PWM,Motor2.PWM,Motor3.PWM,Motor4.PWM);

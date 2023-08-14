@@ -15,7 +15,7 @@
 
 #define MY_USART1_BAUDRATE          115200
 #define MY_USART2_BAUDRATE          115200
-//#define MY_USART3_BAUDRATE          115200
+#define MY_USART3_BAUDRATE          115200//使用普通串口模式
 #define MY_USART4_BAUDRATE          115200
 
 /* Definition for USARTx resources */
@@ -107,7 +107,7 @@
                                     DMA_FLAG_TCIF5
 
 /* Definition for USARTx resources ******************************************/
-/*
+
 #define MY_USART3                   UART4                            
 #define MY_USART3_CLK               RCC_APB1Periph_UART4
 #define MY_USART3_CLK_INIT          RCC_APB1PeriphClockCmd

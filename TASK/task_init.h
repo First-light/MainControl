@@ -39,16 +39,16 @@ void TaskMoveAnalyse(void *p_arg);
 //定义左轮为motor2，右轮为motor3，后轮为motor4 ，顺时针为正？
 //定义手臂电机为motor1
 #define MOTOR_ARM       Motor1
-#define MOTOR_LEFT      Motor2
-#define MOTOR_RIGHT     Motor3
-#define MOTOR_BEHIND 	Motor4
+#define MOTOR_LEFT      Motor4
+#define MOTOR_RIGHT     Motor2
+#define MOTOR_BEHIND 	Motor3
 
-#define ARM_POS_UP      0.0
-#define ARM_POS_DOWN    0.0
+#define ARM_POS_PLUS      364.0
 
 
-#define SIDE_BALANCE_P 0.433
-#define SPEEDLIMIT_MAX 400.0
+#define SIDE_BALANCE_P 		2.0
+#define SPEEDLIMIT 			200.0
+#define AUTOSPEED  		    50.0
 
 /* ************************************ 声明  **************************************** */
 
@@ -106,6 +106,20 @@ typedef enum{
 	MANUAL_ON,
 }ManualTypedef;
 
+typedef enum{
+	MOVE_OFF,
+	MOVE_ON,
+}AutoMoveTypedef;
+
+typedef enum{
+	SOFTSAFE,
+	ERROR_EMPTY_MOVELIST,
+}SoftErrorTypedef;
+
+typedef enum{
+	HEAVYSAFE,
+	ERROR_TOO_FAST,
+}HeavyErrorTypedef;
 
 typedef struct{
 	AttitudeTypedef 	Attitude;
@@ -113,12 +127,15 @@ typedef struct{
 	TestTypedef 		TestMode;
 	ManualTypedef 		ManualMode;
 	uint8_t             Task_Num;
+	AutoMoveTypedef     AutoMoveMode;
+	SoftErrorTypedef    Soft_Error;
+	HeavyErrorTypedef	Heavy_Error;
 }RunningStruct;
 
  typedef struct {
-	int32_t Forth;//前后，前为正，单位毫米
-	int32_t Side;//左右，右为正
-	int32_t Angle;//旋转的角度°逆时针为正,左转为正
+	float Forth;//前后，前为正，单位毫米
+	float Side;//左右，右为正
+	float Angle;//旋转的角度°逆时针为正,左转为正
 }MoveStruct;//自动移动函数先执行旋转，再执行左右，再执行前后
 
  typedef struct {
@@ -153,7 +170,8 @@ extern W3Classic 						My3Moter;
 extern RodTypedef 						GasPushRod;
 extern PosTypedef 						ArmPos;
 extern MoveStruct 						ManualExpected;//调整速度
-extern MoveStruct 						AutoExpected;//调整速度
-
+extern MoveStruct 						AutoSpeedExpected;//调整速度
+extern const MoveStruct 				AutoBlank;
+extern MoveStruct 						AutoPositionExpected;
 #endif
  

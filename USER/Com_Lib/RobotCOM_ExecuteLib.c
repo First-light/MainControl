@@ -76,6 +76,25 @@ void BlueTooth_Get_JOYSTICK_RIGHT_4Claw(COMFrame *Frame)
 	 BluetoothGetJoystickRY=Frame->Data.uint8_ts[1];
 }
 
+void BlueTooth_SimpleManual_1Claw(COMFrame *Frame)
+{
+	u8 GET = Frame->Data.uint8_ts[0];
+	switch(GET)
+	{
+		case 0x10:ManualExpected.Forth = 50.0; break;
+		case 0x11:ManualExpected.Side = -50.0; break;
+		case 0x12:ManualExpected.Forth = -50.0; break;	
+		case 0x13:ManualExpected.Side = 50.0; break;
+		case 0x14:ManualExpected.Angle = 50.0; break;
+		case 0x15:ManualExpected.Angle = -50.0; break;
+		case 0x99:MainControlRun.ManualMode = MANUAL_OFF;break;
+		case 0x01:MainControlRun.TestMode = TEST_ON;break;
+		default:ManualExpected.Angle = 0.0; 
+				ManualExpected.Side = 0.0; 
+				ManualExpected.Forth = 0.0; break;
+	}
+}
+
 void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号
 {
 	Echo_MM =Frame->Data.uint32_ts[0];

@@ -25,6 +25,7 @@
 #include "stm32f4xx_it.h" 
 #include "VESC_CAN.h"
 #include "system_config.h"
+#include "RobotCOM_proplist.h"
 //#include "com_prop.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Examples
@@ -179,23 +180,24 @@ void (MY_USART2_IRQHandler)(void)//pc与上层板子通信口
 {
 	uint16_t temp = 0;
 
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET)
+	if(USART_GetITStatus(MY_USART2, USART_IT_RXNE) == SET)
   {
-    temp = USART_ReceiveData(USART2);
+    temp = USART_ReceiveData(MY_USART2);
 		Get_Frame_COM(temp, MYUSART2);
   }	
 }
 
-/*void (MY_USART3_IRQHandler)(void)
+void (MY_USART3_IRQHandler)(void) //简单传输
 {
 	uint16_t temp = 0;
-	if(USART_GetITStatus(UART4, USART_IT_RXNE) == SET)
-  {
-    temp = USART_ReceiveData(UART4);
-		Get_Frame_COM(temp, MYUSART3);
-  }	
+	if(USART_GetITStatus(MY_USART3, USART_IT_RXNE) == SET)
+	{
+    temp = USART_ReceiveData(MY_USART3);
+		//Get_Frame_COM(temp, MYUSART3);
+	UART_SendByte(MY_USART4,temp);//发送到蓝牙
+	}	
 }
-*/
+
 int t;
 
 void (MY_USART4_IRQHandler)(void)//上层控制板和底盘之间的通信
@@ -267,7 +269,7 @@ void CAN2_RX_IRQHandler(void)
 	if(RxMessage.StdId == Motor_1_ID)
 	{ 
 		Motor1.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor1.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
+		Motor1.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591; 19.0f用于3508，36.0f用于2006
 		if(Motor1.PosPre == 0 && Motor1.PosNow == 0 )
 			Motor1.PosPre = Motor1.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
@@ -295,7 +297,7 @@ void CAN2_RX_IRQHandler(void)
 	else if(RxMessage.StdId == Motor_3_ID)
 	{
 		Motor3.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor3.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/36.0f;//*187.0/3591;   
+		Motor3.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
 		if(Motor3.PosPre == 0 && Motor3.PosNow == 0 )
 			Motor3.PosPre = Motor3.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
@@ -308,7 +310,7 @@ void CAN2_RX_IRQHandler(void)
 	else if(RxMessage.StdId == Motor_4_ID)
 	{
 		Motor4.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor4.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/36.0f;//*187.0/3591;   
+		Motor4.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
 		if(Motor4.PosPre == 0 && Motor4.PosNow == 0 )
 			Motor4.PosPre = Motor4.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
@@ -321,7 +323,7 @@ void CAN2_RX_IRQHandler(void)
 	else if(RxMessage.StdId == Motor_5_ID)
 	{
 		Motor5.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor5.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/36.0f;//*187.0/3591;   
+		Motor5.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
 		if(Motor5.PosPre == 0 && Motor5.PosNow == 0 )
 			Motor5.PosPre = Motor5.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
@@ -334,7 +336,7 @@ void CAN2_RX_IRQHandler(void)
 	else if(RxMessage.StdId == Motor_6_ID)
 	{
 		Motor6.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor6.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/36.0f;//*187.0/3591;   
+		Motor6.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
 		if(Motor6.PosPre == 0 && Motor6.PosNow == 0 )
 			Motor6.PosPre = Motor6.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
@@ -347,7 +349,7 @@ void CAN2_RX_IRQHandler(void)
 	else if(RxMessage.StdId == Motor_7_ID)
 	{
 		Motor7.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor7.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/36.0f;//*187.0/3591;   
+		Motor7.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
 		if(Motor7.PosPre == 0 && Motor7.PosNow == 0 )
 			Motor7.PosPre = Motor7.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
@@ -360,7 +362,7 @@ void CAN2_RX_IRQHandler(void)
 	else if(RxMessage.StdId == Motor_8_ID)
 	{
 		Motor8.CurrentMeasure=(float)(short)(RxMessage.Data[4]<<8 | RxMessage.Data[5]);
-		Motor8.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/36.0f;//*187.0/3591;   
+		Motor8.SpeedMeasure =((float)(short)(RxMessage.Data[2]<<8 | RxMessage.Data[3]))/19.0f;//*187.0/3591;   
 		if(Motor8.PosPre == 0 && Motor8.PosNow == 0 )
 			Motor8.PosPre = Motor8.PosNow = (short)(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 		else
