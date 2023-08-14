@@ -11,9 +11,9 @@ RobotCtrl_t RobotCtrl;
 void TaskHandle(void *p_arg)
 {
   	OS_ERR err;
-  	uint8_t count;
+  	uint8_t count;	
   	while (1) {
-			Motor5.State = PIDPOSITION;
+			//Motor5.State = PIDPOSITION;
 		 	switch(Motor1.State)
 			{
 					case PIDPOSITION:				
@@ -201,17 +201,31 @@ void TaskHandle(void *p_arg)
 						break;
 					
 			}
-
-			//if(MainControlRun.TestMode == TEST_OFF)
-			//{
+			
+			if(
+			Motor1.SpeedMeasure > SPEEDLIMIT ||
+			Motor2.SpeedMeasure > SPEEDLIMIT ||
+			Motor3.SpeedMeasure > SPEEDLIMIT ||
+			Motor4.SpeedMeasure > SPEEDLIMIT ||
+			Motor5.SpeedMeasure > SPEEDLIMIT ||
+			Motor6.SpeedMeasure > SPEEDLIMIT ||
+			Motor7.SpeedMeasure > SPEEDLIMIT ||
+			Motor8.SpeedMeasure > SPEEDLIMIT )
+			{
+				MainControlRun.TestMode = TEST_ON ;
+				MainControlRun.Heavy_Error = ERROR_TOO_FAST; //超速
+			}
+			
+			if(MainControlRun.TestMode == TEST_OFF)
+			{
 				MotorUpdate(Motor1.PWM,Motor2.PWM,Motor3.PWM,Motor4.PWM);
 				MotorUpdate1(Motor5.PWM,Motor6.PWM,Motor7.PWM,Motor8.PWM);
-			//}
-			//else
-			//{
-			//	MotorUpdate(0,0,0,0);
-			//	MotorUpdate1(0,0,0,0);			
-			//}//如果开启测试模式，电调不输出电流
+			}
+			else
+			{
+				MotorUpdate(0,0,0,0);
+				MotorUpdate1(0,0,0,0);			
+			}//如果开启测试模式，电调不输出电流
 
     	OSTimeDlyHMSM(0, 0, 0, 1, OS_OPT_TIME_HMSM_STRICT, &err);
   	} 

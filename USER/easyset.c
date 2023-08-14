@@ -1,4 +1,5 @@
 #include "easyset.h"
+#include "usart.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -114,6 +115,46 @@ void Pin_Down(GPIO_TypeDef * GPIOx ,int32_t pin)
 	 GPIO_ResetBits(GPIOx,Int_to_Pin(pin));
 }
 
+
+void UART_Open(USART_TypeDef * UARTx,uint32_t Baud)
+{
+	USART_InitTypeDef USART_InitStruct;//定义结构体
+
+ 		USART_InitStruct.USART_BaudRate = Baud;
+		USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+		USART_InitStruct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+		USART_InitStruct.USART_Parity = USART_Parity_No;
+		USART_InitStruct.USART_StopBits = USART_StopBits_1;
+		USART_InitStruct.USART_WordLength = USART_WordLength_8b;
+	
+	USART_Init(UARTx,&USART_InitStruct); //初始化串口 （默认设置）
+	USART_Cmd(UARTx,ENABLE); //开启串口
+	USART_ITConfig(UARTx,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(UARTx,USART_IT_IDLE,ENABLE);
+}
+
+void RXTX_Set(GPIO_TypeDef * GPIOx,uint16_t pinRX,uint16_t pinTX,uint8_t PS_RX,uint8_t PS_TX,uint8_t AF)
+{
+	GPIO_InitTypeDef GPIO_InitStruct;//定义结构体
+		GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
+		GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+		GPIO_InitStruct.GPIO_Pin = pinRX;
+		GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP; 
+		GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	GPIO_Init(GPIOx,&GPIO_InitStruct);//设置RX为浮空输入模式
+	
+		GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
+		GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+		GPIO_InitStruct.GPIO_Pin = pinTX;
+		GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP; 
+		GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	GPIO_Init(GPIOx,&GPIO_InitStruct);//设置RX为浮空输入模式
+	GPIO_PinAFConfig(GPIOx,PS_RX,AF);
+	GPIO_PinAFConfig(GPIOx,PS_TX,AF); 
+}
+
 void PinMode(GPIO_TypeDef * GPIOx ,int32_t pin ,int32_t MODE ,int32_t LEVEL)
 {
 	GPIOMode_TypeDef MODE_t = GPIO_Mode_IN; //默认设置
@@ -192,7 +233,19 @@ void EasySet(void)
 {	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE); //开启串口对应的GPIOA的时钟
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE); //开启串口对应的GPIOC的时钟
+
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD,ENABLE); //开启串口对应的GPIOD的时钟
+	
+	(MY_USART3_CLK_INIT)(MY_USART3_CLK,ENABLE); //开启串口对应的时钟
+	(MY_USART3_CLK_INIT)(MY_USART3_GPIO_CLK,ENABLE); //开启串口对应的时钟
+	UART_Open(MY_USART3,MY_USART3_BAUDRATE);
+	NVICMode(MY_USART3_IRQn,1,1);//接收中断设置		
+	RXTX_Set(MY_USART3_GPIO_PORT,
+			 MY_USART3_RX_PIN,
+			 MY_USART3_TX_PIN,
+			 MY_USART3_RX_SOURCE,
+			 MY_USART3_TX_SOURCE,
+			 MY_USART3_AF);
 	
 	PinMode(LED1_GPIO,LED1_Pin,OUTPUT,HIGH);//D1
 	PinMode(LED3_GPIO,LED3_Pin,OUTPUT,HIGH);//D3

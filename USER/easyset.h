@@ -36,16 +36,22 @@ int32_t Pin_to_Int(uint16_t Input);
 uint16_t Int_to_Pin(int32_t Input);
 
 //TIM_SetCompare1（TIMX，xxx）使用这个调节占空比
+
+
+void Pin_Up(GPIO_TypeDef * GPIOx ,int32_t pin);
+void Pin_Down(GPIO_TypeDef * GPIOx ,int32_t pin);
+
+void EasySet(void);
+
+void UART_Open(USART_TypeDef * UARTx,uint32_t Baud);
+void RXTX_Set(GPIO_TypeDef * GPIOx,uint16_t pinRX,uint16_t pinTX ,uint8_t PS_RX,uint8_t PS_TX,uint8_t AF);
+void NVICMode(int ChannelIRQn,int Priority,int SubPriority);
+void PinMode(GPIO_TypeDef * GPIOx ,int32_t pin ,int32_t MODE ,int32_t LEVEL);
 void PWM_Set	(GPIO_TypeDef * GPIOx ,
 				uint16_t pin,
 				uint8_t GPIO_PinSourceX,
 				uint8_t GPIO_AF_TIMx,
 				TIM_TypeDef * TIMx);
-void PinMode(GPIO_TypeDef * GPIOx ,int32_t pin ,int32_t MODE ,int32_t LEVEL);
-void Pin_Up(GPIO_TypeDef * GPIOx ,int32_t pin);
-void Pin_Down(GPIO_TypeDef * GPIOx ,int32_t pin);
-void NVICMode(int ChannelIRQn,int Priority,int SubPriority);
-void EasySet(void);
 
 void CHAR_INT_Change(char* ar2,int32_t b);
 int32_t INT_CHAR_Change(char* ar);

@@ -25,6 +25,7 @@
 #include "stm32f4xx_it.h" 
 #include "VESC_CAN.h"
 #include "system_config.h"
+#include "RobotCOM_proplist.h"
 //#include "com_prop.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Examples
@@ -179,23 +180,24 @@ void (MY_USART2_IRQHandler)(void)//pc与上层板子通信口
 {
 	uint16_t temp = 0;
 
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET)
+	if(USART_GetITStatus(MY_USART2, USART_IT_RXNE) == SET)
   {
-    temp = USART_ReceiveData(USART2);
+    temp = USART_ReceiveData(MY_USART2);
 		Get_Frame_COM(temp, MYUSART2);
   }	
 }
 
-/*void (MY_USART3_IRQHandler)(void)
+void (MY_USART3_IRQHandler)(void) //简单传输
 {
 	uint16_t temp = 0;
-	if(USART_GetITStatus(UART4, USART_IT_RXNE) == SET)
-  {
-    temp = USART_ReceiveData(UART4);
-		Get_Frame_COM(temp, MYUSART3);
-  }	
+	if(USART_GetITStatus(MY_USART3, USART_IT_RXNE) == SET)
+	{
+    temp = USART_ReceiveData(MY_USART3);
+		//Get_Frame_COM(temp, MYUSART3);
+	UART_SendByte(MY_USART4,temp);//发送到蓝牙
+	}	
 }
-*/
+
 int t;
 
 void (MY_USART4_IRQHandler)(void)//上层控制板和底盘之间的通信

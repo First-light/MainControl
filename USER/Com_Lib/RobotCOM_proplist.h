@@ -66,6 +66,7 @@ extern const uint8_t g_My_USART4_Prop_Count;
 #define BLUETOOTH_GET_BUTTON_4CLAW 0x98
 #define BLUETOOTH_GET_JOYSTICKL_4CLAW 0x50
 #define BLUETOOTH_GET_JOYSTICKR_4CLAW 0x51 
+#define BLUETOOTH_SM_1CLAW 0x59
 
 #define USART_SUBMAINECHO_4CLAW 0x62
 #define USART_SUBMAINLINE_8CLAW 0x63
@@ -78,6 +79,7 @@ void Usart_Test(COMFrame *Frame);//test
 void BlueTooth_Get_BUTTON_4Claw(COMFrame *Frame);
 void BlueTooth_Get_JOYSTICK_LEFT_4Claw(COMFrame *Frame);
 void BlueTooth_Get_JOYSTICK_RIGHT_4Claw(COMFrame *Frame);
+void BlueTooth_SimpleManual_1Claw(COMFrame *Frame);
 
 void Usart_SubMainEcho_4Claw(COMFrame *Frame);
 void Usart_SubMainLine_8Claw(COMFrame *Frame);
