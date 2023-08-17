@@ -8,12 +8,53 @@
 bool StateSwitch = 0;
 RobotCtrl_t RobotCtrl;
 
+void SpeedLimit()
+{
+	if(
+	Motor1.SpeedExpected > SPEEDLIMIT ||
+	Motor2.SpeedExpected > SPEEDLIMIT ||
+	Motor3.SpeedExpected > SPEEDLIMIT ||
+	Motor4.SpeedExpected > SPEEDLIMIT ||
+	Motor5.SpeedExpected > SPEEDLIMIT ||
+	Motor6.SpeedExpected > SPEEDLIMIT ||
+	Motor7.SpeedExpected > SPEEDLIMIT ||
+	Motor8.SpeedExpected > SPEEDLIMIT )
+	{
+		MainControlRun.Soft_Error = ERROR_SPEEDLIMIT; //³¬ËÙ
+		while(
+		Motor1.SpeedExpected > SPEEDLIMIT ||
+		Motor2.SpeedExpected > SPEEDLIMIT ||
+		Motor3.SpeedExpected > SPEEDLIMIT ||
+		Motor4.SpeedExpected > SPEEDLIMIT ||
+		Motor5.SpeedExpected > SPEEDLIMIT ||
+		Motor6.SpeedExpected > SPEEDLIMIT ||
+		Motor7.SpeedExpected > SPEEDLIMIT ||
+		Motor8.SpeedExpected > SPEEDLIMIT )
+		{
+			Motor1.SpeedExpected *= 0.9; 
+			Motor2.SpeedExpected *= 0.9;
+			Motor3.SpeedExpected *= 0.9;
+			Motor4.SpeedExpected *= 0.9;
+			Motor5.SpeedExpected *= 0.9;
+			Motor6.SpeedExpected *= 0.9;
+			Motor7.SpeedExpected *= 0.9;
+			Motor8.SpeedExpected *= 0.9;			
+		}
+	}
+	else
+	{
+		MainControlRun.Soft_Error = SOFTSAFE; 
+	}
+}
+
 void TaskHandle(void *p_arg)
 {
   	OS_ERR err;
   	uint8_t count;	
   	while (1) {
-			//Motor5.State = PIDPOSITION;
+	
+			SpeedLimit();
+
 		 	switch(Motor1.State)
 			{
 					case PIDPOSITION:				
@@ -202,19 +243,7 @@ void TaskHandle(void *p_arg)
 					
 			}
 			
-			if(
-			Motor1.SpeedMeasure > SPEEDLIMIT ||
-			Motor2.SpeedMeasure > SPEEDLIMIT ||
-			Motor3.SpeedMeasure > SPEEDLIMIT ||
-			Motor4.SpeedMeasure > SPEEDLIMIT ||
-			Motor5.SpeedMeasure > SPEEDLIMIT ||
-			Motor6.SpeedMeasure > SPEEDLIMIT ||
-			Motor7.SpeedMeasure > SPEEDLIMIT ||
-			Motor8.SpeedMeasure > SPEEDLIMIT )
-			{
-				MainControlRun.TestMode = TEST_ON ;
-				MainControlRun.Heavy_Error = ERROR_TOO_FAST; //³¬ËÙ
-			}
+
 			
 			if(MainControlRun.TestMode == TEST_OFF)
 			{

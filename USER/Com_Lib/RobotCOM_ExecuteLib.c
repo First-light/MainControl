@@ -87,8 +87,15 @@ void BlueTooth_SimpleManual_1Claw(COMFrame *Frame)
 		case 0x13:ManualExpected.Side = 50.0; break;
 		case 0x14:ManualExpected.Angle = 50.0; break;
 		case 0x15:ManualExpected.Angle = -50.0; break;
+		case 0x16:ArmPos = POS_ON;break;
+		case 0x17:ArmPos = POS_OFF;break;
+		
 		case 0x99:MainControlRun.ManualMode = MANUAL_OFF;break;
-		case 0x01:MainControlRun.TestMode = TEST_ON;break;
+		case 0x01:MainControlRun.TestMode = TEST_ON;
+				  MainControlRun.Soft_Error = ERROR_BLUESTOP;	
+				  break;
+		case 0x02:NVIC_SystemReset();break;			
+		
 		default:ManualExpected.Angle = 0.0; 
 				ManualExpected.Side = 0.0; 
 				ManualExpected.Forth = 0.0; break;
@@ -102,12 +109,13 @@ void Usart_SubMainEcho_4Claw(COMFrame *Frame)//串口接收超声波信号
 
 void Usart_SubMainLine_8Claw(COMFrame *Frame)//串口接收循迹红外偏移量信号
 {
-	FrontLine = Frame->Data.int16_ts[0];
-	BehindLine = Frame->Data.int16_ts[1];
-	FrontCount = Frame->Data.uint8_ts[4];
-	BehindCount = Frame->Data.uint8_ts[5];
+	FrontLine 				= Frame->Data.int16_ts[0];
+	BehindLine 				= Frame->Data.int16_ts[1];
+	FrontCount 				= Frame->Data.uint8_ts[4];
+	BehindCount 			= Frame->Data.uint8_ts[5];
+	MainControlRun.LineMode = Frame->Data.uint8_ts[6];
 }
- 
+
 void Usart_SubMainPoint_8Claw(COMFrame *Frame)//串口接收负责点检测的传感器的信号
 {
 	PointList[LeftPoint] = Frame->Data.uint8_ts[0];

@@ -38,17 +38,24 @@ void TaskMoveAnalyse(void *p_arg);
 /* ************************************ 宏定义 **************************************** */
 //定义左轮为motor2，右轮为motor3，后轮为motor4 ，顺时针为正？
 //定义手臂电机为motor1
-#define MOTOR_ARM       Motor1
-#define MOTOR_LEFT      Motor4
-#define MOTOR_RIGHT     Motor2
-#define MOTOR_BEHIND 	Motor3
+#define MOTOR_ARM       	Motor1
+#define MOTOR_LEFT      	Motor4
+#define MOTOR_RIGHT     	Motor2
+#define MOTOR_BEHIND 		Motor3
 
-#define ARM_POS_PLUS      364.0
-
+#define ARM_POS_PLUS      	364.0
 
 #define SIDE_BALANCE_P 		2.0
+
 #define SPEEDLIMIT 			200.0
+
+#define AUTOLINESPEED       80.0
 #define AUTOSPEED  		    50.0
+#define AUTOFASTSPEED  		100.0
+#define MAX_LOSTLINE_TIME	1000
+
+#define POINTCOUNT          6
+#define MAXLINE             10000.0
 
 /* ************************************ 声明  **************************************** */
 
@@ -84,22 +91,25 @@ typedef enum{
 	AT_MANUAL,
 	AT_MANUAL_SENSOR_MOVE,
 	AT_MANUAL_TEST,
-	AT_AUTO_SENSOR_MOVE,//不接收红外信号，而是使用惯性传感器做一次运动
-	AT_AUTO_START,
-	AT_AUTO_FOLLOWLINE_SHORT,//巡线固定的一段时间，然后完成任务
-	AT_AUTO_FOLLOWLINE_LONG,
-	AT_AUTO_FINDPOINT,
-	AT_AUTO_FINDCAN,
-	AT_AUTO_CATCHCAN,
-	AT_AUTO_FINDSTEP1,
-	AT_AUTO_PUTCAN,
-	AT_AUTO_BACKTOLINE,
-	AT_AUTO_FINDSTEP2,
-	AT_AUTO_TESTSTART//测试模式，会同步开启自动程序，不过不会给电机和舵机还有夹爪使能
+	AT_AUTO_SLOW_MOVE,//不接收红外信号，做一次运动
+	AT_AUTO_FAST_MOVE,
+	AT_AUTO_FOLLOWLINE,//巡线一段时间
+	AT_AUTO_FINDPOINT,//一边巡线一边找交点，找到交点就停
+	AT_AUTO_REBASE,
+	AT_AUTO_ARM_UP,
+	AT_AUTO_ARM_DOWN,
+	AT_AUTO_HAND_OPEN,
+	AT_AUTO_HAND_CLOSE,
+	AT_AUTO_TEST//测试模式，会同步开启自动程序，不过不会给电机和舵机还有夹爪使能
 } AttitudeTypedef; //处于任何模式下传感器都在执行检测，不过不会进行运动合成和将结果输出到电机
 //控制逻辑，传感器原始数据-》小车姿态信息-》小车运动合成-》电机运动
 //每一步AUTO都有状态检测，达成指标则进行下一步，
 //运动和传感计算分离出来写函数
+
+typedef enum{
+	UNUSE_LINE,
+	USE_LINE,
+}AutoLineTypedef;
 
 typedef enum{
 	MANUAL_OFF,
@@ -114,11 +124,14 @@ typedef enum{
 typedef enum{
 	SOFTSAFE,
 	ERROR_EMPTY_MOVELIST,
+	ERROR_SPEEDLIMIT,
+	ERROR_BLUESTOP,
 }SoftErrorTypedef;
 
 typedef enum{
 	HEAVYSAFE,
 	ERROR_TOO_FAST,
+	ERROR_LOSTLINE,
 }HeavyErrorTypedef;
 
 typedef struct{
@@ -128,6 +141,7 @@ typedef struct{
 	ManualTypedef 		ManualMode;
 	uint8_t             Task_Num;
 	AutoMoveTypedef     AutoMoveMode;
+	AutoLineTypedef     AutoLineMode;
 	SoftErrorTypedef    Soft_Error;
 	HeavyErrorTypedef	Heavy_Error;
 }RunningStruct;

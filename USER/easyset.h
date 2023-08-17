@@ -20,17 +20,8 @@
 #define LED3_GPIO       GPIOB
 #define LED3_Pin        15
 
-#define FRONTLINE_LEFT1_Pin 			1
-#define FRONTLINE_LEFT1_GPIOPin 		GPIO_Pin_1
-#define FRONTLINE_LEFT1_GPIO 			GPIOD
-
-#define FRONTLINE_CENTER_Pin 			0
-#define FRONTLINE_CENTER_GPIOPin 		GPIO_Pin_0
-#define FRONTLINE_CENTER_GPIO 			GPIOD
-
-#define FRONTLINE_RIGHT1_Pin 			12
-#define FRONTLINE_RIGHT1_GPIOPin 		GPIO_Pin_12
-#define FRONTLINE_RIGHT1_GPIO 			GPIOC
+#define ROB_GPIOx 	GPIOB
+#define ROB_PINx    4    //enc_3
 
 int32_t Pin_to_Int(uint16_t Input);
 uint16_t Int_to_Pin(int32_t Input);

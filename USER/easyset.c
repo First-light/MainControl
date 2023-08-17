@@ -250,6 +250,7 @@ void EasySet(void)
 	PinMode(LED1_GPIO,LED1_Pin,OUTPUT,HIGH);//D1
 	PinMode(LED3_GPIO,LED3_Pin,OUTPUT,HIGH);//D3
 	PinMode(LED2_GPIO,LED2_Pin,OUTPUT,HIGH);//D2
+	PinMode(ROB_GPIOx,ROB_PINx,OUTPUT,LOW);//ROB
 	//九个前端传感器信号接收
 	//PinMode(GPIOC,12,INPUT,HIGH);//最右端传感器
 	//PinMode(GPIOD,0,INPUT,HIGH);//中央

@@ -79,22 +79,42 @@ void TaskUSART(void *p_arg)
     OS_ERR err;
 		while(1)
 		{
-			/*		
-			Test_Send();
-			UART_SendString(MY_USART4,"FrontLine : ");
-			UART_SendNum_Short(MY_USART4,FrontLine);
-			UART_SendString(MY_USART4,"\n");
-			UART_SendString(MY_USART4,"ARM_Position : ");
-			UART_SendNum_Short(MY_USART4,(uint32_t)MyCar.arm->PositionMeasure);
-			UART_SendString(MY_USART4,"\n");
+					
+			//Test_Send();
+			UART_SendString(MY_USART4,"@ ");
 			UART_SendString(MY_USART4,"Task_Num : ");
 			UART_SendNum_Short(MY_USART4,(uint32_t)MainControlRun.Task_Num);
 			UART_SendString(MY_USART4,"\n");
 			
-			UART_SendString(MY_USART4,"Arm_Pos : ");
+			UART_SendString(MY_USART4,"@ ");
+			UART_SendString(MY_USART4,"Attitude : ");
+			UART_SendNum_Short(MY_USART4,(uint32_t)MainControlRun.Attitude);
+			UART_SendString(MY_USART4,"\n");
+			
+			UART_SendString(MY_USART4,"FrontLine : ");
+			UART_SendNum_Short(MY_USART4,FrontLine);
+			UART_SendString(MY_USART4,"\n");
+			
+			UART_SendString(MY_USART4,"FrontCount: ");
+			UART_SendNum_Short(MY_USART4,FrontCount);
+			UART_SendString(MY_USART4,"\n");
+			
+			UART_SendString(MY_USART4,"ARM_Position : ");
 			UART_SendNum_Short(MY_USART4,(uint32_t)MyCar.arm->PositionMeasure);
 			UART_SendString(MY_USART4,"\n");
-			*/
+			
+			UART_SendString(MY_USART4,"Arm_Pos : ");
+			UART_SendNum_Short(MY_USART4,(uint32_t)MyCar.arm->PositionMeasure);
+			UART_SendString(MY_USART4,"\n");	
+
+			UART_SendString(MY_USART4,"ERRORS: ");
+			UART_SendNum_Short(MY_USART4,(uint32_t)MainControlRun.Soft_Error);
+			UART_SendString(MY_USART4,"\t");
+			UART_SendNum_Short(MY_USART4,(uint32_t)MainControlRun.Heavy_Error);
+			UART_SendString(MY_USART4,"\n");
+			
+			UART_SendString(MY_USART4,"\n");
+			UART_SendString(MY_USART4,"\n");
 			OSTimeDlyHMSM(0, 0, 0,100, OS_OPT_TIME_HMSM_STRICT, &err);
 		}
 }

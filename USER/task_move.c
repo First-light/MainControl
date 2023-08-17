@@ -54,7 +54,10 @@ void Actions()
 	if(ArmPos == POS_ON) 	MyCar.arm->PositionExpected = ARM_POS_PLUS ;//float	
 	else 					MyCar.arm->PositionExpected = 0 ;
 	
-	Action_Send();
+	if(GasPushRod == ROD_PUSH) 		Pin_Up(ROB_GPIOx,ROB_PINx);	 
+	else if(GasPushRod == ROD_PULL) Pin_Down(ROB_GPIOx,ROB_PINx);	
+	
+	//Action_Send();
 }
 
 void SpeedDeliver(MoveStruct Expected,ThreeWheel_MoveParameter P)
@@ -131,10 +134,15 @@ void TaskMoveAnalyse(void *p_arg)
 			SpeedDeliver(ManualExpected,Manual_P);	
 			Actions();
 		}
-		else if(MainControlRun.Attitude == AT_AUTO_SENSOR_MOVE && MainControlRun.AutoMoveMode == MOVE_ON)
+		else if(MainControlRun.AutoMoveMode == MOVE_ON)
 		{
 			SpeedDeliver(AutoSpeedExpected,Auto_P);
-		}  
+			Actions();
+		}
+		else
+		{
+			SpeedDeliver(AutoBlank,Auto_P);
+		}
 		OSTimeDlyHMSM(0, 0, 0, 1, OS_OPT_TIME_HMSM_STRICT, &err);
 	}
 }
